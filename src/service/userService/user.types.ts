@@ -18,11 +18,6 @@ export interface UserResponse {
     profileLink: string;
 }
 
-export interface ErrorResponse {
-    status: string;
-    message: string;
-}
-
 export interface SignInRequest {
     mail: string;
     password: string;
