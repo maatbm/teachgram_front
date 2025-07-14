@@ -47,4 +47,12 @@ export class PostService {
             return ErrorHandler(error);
         }
     }
+
+    static async deletePost(postId: number): Promise<void | ErrorResponse> {
+        try {
+            await API.delete(`/post/${postId}`);
+        } catch (error) {
+            return ErrorHandler(error);
+        }
+    }
 }
