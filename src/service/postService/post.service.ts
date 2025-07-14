@@ -29,4 +29,13 @@ export class PostService {
             return ErrorHandler(error);
         }
     }
+
+    static async likePost(postId: number): Promise<number | ErrorResponse> {
+        try {
+            const response = await API.patch(`/post/like/${postId}`);
+            return response.data.likes as number;
+        } catch (error) {
+            return ErrorHandler(error);
+        }
+    }
 }
