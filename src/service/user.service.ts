@@ -43,6 +43,16 @@ interface AllNonDeletedUsersResponse {
   totalPages: number;
 }
 
+interface UpdateUserProfileRequest {
+  name: string | null;
+  mail: string | null;
+  username: string | null;
+  description: string | null;
+  phone: string | null;
+  password: string | null;
+  profileLink: string | null;
+}
+
 export class UserService {
   static async signup(request: SignUpRequest): Promise<UserResponse | ErrorResponse> {
     try {
@@ -81,6 +91,16 @@ export class UserService {
       return errorHandler(error);
     }
   }
+
+  static async updateUserprofile(request: UpdateUserProfileRequest): Promise<UserResponse | ErrorResponse> {
+    try {
+      const response = await API.patch("/user", request);
+      return response.data as UserResponse;
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+
 }
 
 function errorHandler(error: any): ErrorResponse {
