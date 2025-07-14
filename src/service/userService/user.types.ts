@@ -36,11 +36,11 @@ export interface AllNonDeletedUsersResponse {
 }
 
 export interface UpdateUserProfileRequest {
-    name: string | null;
-    mail: string | null;
-    username: string | null;
-    description: string | null;
-    phone: string | null;
-    password: string | null;
-    profileLink: string | null;
+    name?: string;
+    mail?: string;
+    username?: string;
+    description?: string;
+    phone?: string;
+    password?: string;
+    profileLink?: string;
 }
