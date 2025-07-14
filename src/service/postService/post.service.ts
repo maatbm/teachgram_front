@@ -20,4 +20,13 @@ export class PostService {
             return ErrorHandler(error);
         }
     }
+
+    static async getUserPosts(userId: number, page: number, size: number): Promise<PostTypes.PagePostsResponse | ErrorResponse> {
+        try {
+            const response = await API.get(`/post/user/${userId}`, { params: { page, size } });
+            return response.data as PostTypes.PagePostsResponse;
+        } catch (error) {
+            return ErrorHandler(error);
+        }
+    }
 }
