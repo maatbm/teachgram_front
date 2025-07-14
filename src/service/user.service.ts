@@ -72,6 +72,13 @@ export class UserService {
       return errorHandler(error);
     }
   }
+
+  static async getUserProfile(): Promise<UserResponse | ErrorResponse> {
+    try {
+      const response = await API.get("/user/profile");
+      return response.data as UserResponse;
+    } catch (error) {
+      return errorHandler(error);
     }
   }
 }
