@@ -11,7 +11,7 @@ interface SignUpRequest {
   profileLink: string;
 }
 
-interface SignUpResponse {
+interface UserResponse {
   id: number;
   name: string;
   mail: string;
@@ -37,13 +37,19 @@ interface JwtTokenResponse {
   expiration: number;
 }
 
+interface AllNonDeletedUsersResponse {
+  users: UserResponse[];
+  totalItems: number;
+  totalPages: number;
+}
+
 export class UserService {
-  static async signup(request: SignUpRequest): Promise<SignUpResponse | ErrorResponse> {
+  static async signup(request: SignUpRequest): Promise<UserResponse | ErrorResponse> {
     try {
       const response = await API.post("/user/signup", request);
-      return response.data as SignUpResponse;
+      return response.data as UserResponse;
     } catch (error) {
-        return errorHandler(error);
+      return errorHandler(error);
     }
   }
 
@@ -52,7 +58,20 @@ export class UserService {
       const response = await API.post("/user/signin", request);
       return response.data as JwtTokenResponse;
     } catch (error) {
-        return errorHandler(error);
+      return errorHandler(error);
+    }
+  }
+
+  static async getAllNonDeletedUsers(page: number, size: number): Promise<AllNonDeletedUsersResponse | ErrorResponse> {
+    try {
+      const response = await API.get("/user/all", {
+        params: { page, size },
+      });
+      return response.data as AllNonDeletedUsersResponse;
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
     }
   }
 }
