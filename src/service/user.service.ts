@@ -101,6 +101,13 @@ export class UserService {
     }
   }
 
+  static async deleteUserProfile(): Promise<ErrorResponse | void> {
+    try {
+      await API.delete("/user");
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
 }
 
 function errorHandler(error: any): ErrorResponse {
