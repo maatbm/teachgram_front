@@ -26,6 +26,17 @@ interface ErrorResponse {
   message: string;
 }
 
+interface SignInRequest {
+  mail: string;
+  password: string;
+}
+
+interface JwtTokenResponse {
+  type: string;
+  token: string;
+  expiration: number;
+}
+
 export class UserService {
   static async signup(request: SignUpRequest): Promise<SignUpResponse | ErrorResponse> {
     try {
@@ -35,6 +46,16 @@ export class UserService {
         return errorHandler(error);
     }
   }
+
+  static async signin(request: SignInRequest): Promise<JwtTokenResponse | ErrorResponse> {
+    try {
+      const response = await API.post("/user/signin", request);
+      return response.data as JwtTokenResponse;
+    } catch (error) {
+        return errorHandler(error);
+    }
+  }
+}
 
 function errorHandler(error: any): ErrorResponse {
   if (axios.isAxiosError(error) && error.response) {
