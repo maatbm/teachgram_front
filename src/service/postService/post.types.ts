@@ -17,3 +17,8 @@ export interface PostResponse {
     createdAt: string;
 }
 
+export interface PagePostsResponse {
+    posts: PostResponse[];
+    totalItems: Number;
+    totalPages: Number;
+}

@@ -11,4 +11,13 @@ export class PostService {
             return ErrorHandler(error);
         }
     }
+
+    static async getFeedposts(page: number, size: number): Promise<PostTypes.PagePostsResponse | ErrorResponse> {
+        try {
+            const response = await API.get("/post/feed", { params: { page, size } });
+            return response.data as PostTypes.PagePostsResponse;
+        } catch (error) {
+            return ErrorHandler(error);
+        }
+    }
 }
