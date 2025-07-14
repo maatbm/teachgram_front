@@ -34,7 +34,7 @@ export class UserService {
 
   static async getUserProfile(): Promise<UserTypes.UserResponse | ErrorResponse> {
     try {
-      const response = await API.get("/user/profile");
+      const response = await API.get("/user");
       return response.data as UserTypes.UserResponse;
     } catch (error) {
       return ErrorHandler(error);

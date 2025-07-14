@@ -23,7 +23,7 @@ export class PostService {
 
     static async getUserPosts(userId: number, page: number, size: number): Promise<PostTypes.PagePostsResponse | ErrorResponse> {
         try {
-            const response = await API.get(`/post/user/${userId}`, { params: { page, size } });
+            const response = await API.get(`/post/profile/${userId}`, { params: { page, size } });
             return response.data as PostTypes.PagePostsResponse;
         } catch (error) {
             return ErrorHandler(error);
