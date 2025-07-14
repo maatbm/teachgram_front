@@ -22,3 +22,11 @@ export interface PagePostsResponse {
     totalItems: Number;
     totalPages: Number;
 }
+
+export interface UpdatePostRequest {
+    title?: string;
+    description?: string;
+    photoLink?: string;
+    videoLink?: string;
+    isPrivate?: boolean;
+}

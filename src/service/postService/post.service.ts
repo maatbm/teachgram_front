@@ -38,4 +38,13 @@ export class PostService {
             return ErrorHandler(error);
         }
     }
+
+    static async updatePost(postId: number, request: PostTypes.UpdatePostRequest): Promise<PostTypes.PostResponse | ErrorResponse> {
+        try {
+            const response = await API.patch(`/post/${postId}`, request);
+            return response.data as PostTypes.PostResponse;
+        } catch (error) {
+            return ErrorHandler(error);
+        }
+    }
 }
