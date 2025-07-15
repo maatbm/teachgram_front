@@ -1,7 +1,7 @@
 import { LoginWithGoogle } from "@components/button/LoginWIthGoogle";
 import { LoginWithApple } from "@components/button/LoginWithApple";
 
-export function LoginWithGoogleOrApple() {
+export function SigninWithGoogleOrApple() {
     return (
         <>
             <fieldset className="w-full border-t-2 border-secondary text-secondary">

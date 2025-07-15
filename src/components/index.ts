@@ -1,4 +1,4 @@
-export { LoginWithGoogleOrApple } from './LoginWithGoogleOrApple';
+export { SigninWithGoogleOrApple } from './signinWIthGoogleOrApple/SigninWithGoogleOrApple';
 export { PrimaryButton } from './button/PrimaryButton';
 export { SideImage } from './image/SideImage';
 export { TopImage } from './image/TopImage';
