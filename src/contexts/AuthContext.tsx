@@ -1,7 +1,7 @@
-import * as UserTypes from "@services/userService/user.types";
+import * as UserTypes from "services/userService/user.types";
 import { createContext, useEffect, useState, useContext } from "react";
-import { UserService } from "@services/userService/user.service";
-import { setAuthToken } from "@services/API";
+import { UserService } from "services/userService/user.service";
+import { setAuthToken } from "services/API";
 
 interface AuthContextType {
   isAuthenticated: boolean;

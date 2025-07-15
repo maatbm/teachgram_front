@@ -1,5 +1,5 @@
-import { LoginWithGoogle } from "@components/button/LoginWIthGoogle";
-import { LoginWithApple } from "@components/button/LoginWithApple";
+import { LoginWithGoogle } from "components/button/LoginWIthGoogle";
+import { LoginWithApple } from "components/button/LoginWithApple";
 
 export function SigninWithGoogleOrApple() {
     return (

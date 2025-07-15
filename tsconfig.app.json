@@ -23,13 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    /* Alias */
-    "baseUrl": "./src",
-    "paths": {
-      "@services/*": ["services/*"],
-      "@componentsAssets/*": ["assets/components/*"],
-      "@components/*": ["components/*"],
-    }
+    "baseUrl": "./src"
   },
   "include": ["src"]
 }

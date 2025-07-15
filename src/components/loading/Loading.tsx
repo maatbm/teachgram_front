@@ -1,4 +1,4 @@
-import teachgramLoading from "@componentsAssets/loading/teachgramLoading.png";
+import teachgramLoading from "assets/loading/teachgramLoading.png";
 
 export function Loading() {
     return (

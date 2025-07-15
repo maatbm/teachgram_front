@@ -1,4 +1,4 @@
-import googleIcon from "@componentsAssets/LoginWithGoogle/googleLogo.png";
+import googleIcon from "assets/LoginWithGoogle/googleLogo.png";
 
 export function LoginWithGoogle() {
     return (
