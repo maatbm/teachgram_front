@@ -8,7 +8,7 @@ export function SigninPage() {
                 <div className="w-[55%]">
                     <TopImage />
                 </div>
-                <div className="w-[45%] mt-15">
+                <div className="w-[45%] mt-20">
                     <h2 className="text-quaternary font-semibold mb-5">Faça seu login</h2>
                     <form className="w-full">
                         <AuthInput
