@@ -8,7 +8,7 @@ export function LoginWithGoogle() {
             onClick={() => { console.log('Login with Google clicked') }}
         >
             <img src={googleIcon} alt="Google icon" className="w-[17px] h-[18px]" />
-            <span className="text-lg font-semibold text-secondary">Login with Google</span>
+            <span className="text-lg font-semibold text-secondary">Entrar com Google</span>
         </div>
     );
 }
