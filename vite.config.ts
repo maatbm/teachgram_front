@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: [
-      { find: '@services', replacement: '/src/services' }
+      { find: '@services', replacement: '/src/services' },
+      { find: '@componentsAssets', replacement: '/src/assets/components' } 
     ]
   }
 })

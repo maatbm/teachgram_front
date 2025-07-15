@@ -26,7 +26,8 @@
     /* Alias */
     "baseUrl": "./src",
     "paths": {
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@componentsAssets/*": ["assets/components/*"]
     }
   },
   "include": ["src"]
