@@ -5,8 +5,28 @@
   --color-primary: #f37671;
   --color-secondary: #a09f9f;
   --color-terciary: #666666;
+  --color-quaternary: #303030;
 }
 
 * {
   font-family: "Inter", sans-serif;
+}
+
+@utility checkbox-checked {
+  &:checked {
+    @apply bg-primary border-primary;
+    position: relative;
+    &::after {
+      content: "✔";
+      @apply absolute text-white text-xs flex items-center justify-center w-full h-full;
+    }
+  }
+}
+
+@utility shadow {
+  box-shadow: 0 0 15px #30303055;
+}
+
+@utility rounded-circle {
+  border-radius: 50%;
 }
