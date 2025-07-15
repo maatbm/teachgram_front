@@ -45,17 +45,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   async function signin(credentials: UserTypes.SignInRequest, rememberMe: boolean) {
     setError(null);
     setLoading(true);
-    const response = await UserService.signin(credentials);
-    if ("token" in response) {
-      setAuthToken(response.type + response.token);
-      setIsAuthenticated(true);
-      if (rememberMe) {
-        localStorage.setItem(localStorageTokenName, JSON.stringify(response));
+    try {
+      const response = await UserService.signin(credentials);
+      if ("token" in response) {
+        setAuthToken(response.type + response.token);
+        setIsAuthenticated(true);
+        if (rememberMe) {
+          localStorage.setItem(localStorageTokenName, JSON.stringify(response));
+        }
+      } else {
+        setError(response.message || "An error occurred during sign-in.");
       }
-    } else {
-      setError(response.message || "An error occurred during sign-in.");
+    } catch (error) {
+      console.error("Sign-in error:", error);
+      setError("An error occurred during sign-in. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   function signout() {
