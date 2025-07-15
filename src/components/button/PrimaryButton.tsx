@@ -5,7 +5,7 @@ interface PrimaryButtonProps {
 
 export function PrimaryButton(props: PrimaryButtonProps) {
     <button
-        className="w-full mt-5 bg-primary rounded-xl p-3 font-bold text-white text-[20px] shadow cursor-pointer hover:bg-red-700 duration-50 ease-in-out"
+        className="w-full mt-5 bg-primary rounded-xl p-3 font-bold text-white text-[20px] shadow cursor-pointer hover:bg-red-700 duration-500 ease-in-out"
         onClick={props.onClick} type="button"
     >{props.label}</button>
 }
