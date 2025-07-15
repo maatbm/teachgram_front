@@ -7,7 +7,7 @@ export function LoginWithGoogle() {
             role="button"
             onClick={() => { console.log('Login with Google clicked') }}
         >
-            <img src={googleIcon} alt="Google icon" className="w-[20px]" />
+            <img src={googleIcon} alt="Google icon" className="w-[17px] h-[18px]" />
             <span className="text-lg font-semibold">Login with Google</span>
         </div>
     );
