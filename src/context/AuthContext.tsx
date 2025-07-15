@@ -1,0 +1,76 @@
+import * as UserTypes from "@service/userService/user.types";
+import { createContext, useEffect, useState } from "react";
+import { UserService } from "@service/userService/user.service";
+import { setAuthToken } from "@service/API";
+
+interface AuthContextType {
+  isAuthenticated: boolean;
+  signin: (credentials: UserTypes.SignInRequest, rememberMe: boolean) => Promise<void>;
+  signout: () => void;
+  error: string | null;
+  loading: boolean;
+}
+
+const localStorageTokenName = "teachgram_jwt";
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    try {
+      const tokenString = localStorage.getItem(localStorageTokenName);
+      if (tokenString) {
+        const parsedToken: UserTypes.JwtTokenResponse = JSON.parse(tokenString);
+        if (parsedToken && parsedToken.token && parsedToken.expiration > Date.now()) {
+          setAuthToken(parsedToken.type + parsedToken.token);
+          setIsAuthenticated(true);
+        } else {
+          localStorage.removeItem(localStorageTokenName);
+          setAuthToken(null);
+          setIsAuthenticated(false);
+        }
+      }
+    } catch (error) {
+      console.error("Error on pre-loading token:", error);
+      localStorage.removeItem(localStorageTokenName);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  async function signin(credentials: UserTypes.SignInRequest, rememberMe: boolean) {
+    setError(null);
+    setLoading(true);
+    const response = await UserService.signin(credentials);
+    if ("token" in response) {
+      setAuthToken(response.type + response.token);
+      setIsAuthenticated(true);
+      if (rememberMe) {
+        localStorage.setItem(localStorageTokenName, JSON.stringify(response));
+      }
+    } else {
+      setError(response.message || "An error occurred during sign-in.");
+    }
+    setLoading(false);
+  }
+
+  function signout() {
+    setAuthToken(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem(localStorageTokenName);
+  }
+
+  const contextValue: AuthContextType = {
+    isAuthenticated,
+    signin,
+    signout,
+    error,
+    loading,
+  }
+
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+};
