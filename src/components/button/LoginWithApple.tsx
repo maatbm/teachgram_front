@@ -1,4 +1,4 @@
-import appleIcon from "assets/LoginWithApple/appleLogo.png";
+import appleIcon from "assets/components/LoginWithApple/appleLogo.png";
 
 export function LoginWithApple() {
     return (

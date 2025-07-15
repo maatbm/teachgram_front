@@ -1,4 +1,4 @@
-import sideImage from "assets/SideImage/sideImage.png";
+import sideImage from "assets/components/SideImage/sideImage.png";
 
 export function SideImage() {
     return (

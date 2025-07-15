@@ -1,4 +1,4 @@
-import topImage from "assets/TopImage/teachgram.png"
+import topImage from "assets/components/TopImage/teachgram.png"
 
 export function TopImage() {
     return (
