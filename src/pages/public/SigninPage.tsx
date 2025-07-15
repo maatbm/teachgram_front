@@ -1,7 +1,17 @@
 import { SideImage, TopImage, AuthInput, PrimaryButton, SigninWithGoogleOrApple } from "components";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { type SignInRequest } from "services/userService/user.types";
 
 export function SigninPage() {
+    const [rememberMe, setRememberMe] = useState(false);
+    const [credentials, setCredentials] = useState<SignInRequest>({mail: "", password: ""});
+
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target;
+        setCredentials((prev) => ({ ...prev, [name]: value }));
+    }
+
     return (
         <main className="w-full h-full flex items-center justify-center">
             <div className="w-1/2 h-full flex flex-col items-center justify-center">
@@ -17,7 +27,9 @@ export function SigninPage() {
                             type="email"
                             placeholder="Digite seu E-mail"
                             required={true}
-                            onChange={(e) => console.log(e.target.value)}
+                            name="mail"
+                            value={credentials.mail}
+                            onChange={(e) => handleInputChange(e)}
                         />
                         <AuthInput
                             label="Senha"
@@ -25,13 +37,17 @@ export function SigninPage() {
                             type="password"
                             placeholder="Digite sua Senha"
                             required={true}
-                            onChange={(e) => console.log(e.target.value)}
+                            name="password"
+                            value={credentials.password}
+                            onChange={(e) => handleInputChange(e)}
                         />
                         <div className="w-full flex text-[12px] text-terciary">
                             <div className="w-1/2 flex gap-3">
                                 <input
                                     type="checkbox"
                                     className="w-4 h-4 appearance-none border-2 border-primary rounded checkbox-checked cursor-pointer"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
                                 />
                                 <label>Lembra senha</label>
                             </div>
