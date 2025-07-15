@@ -4,6 +4,7 @@ interface AuthInputProps {
     type: string;
     placeholder?: string;
     required?: boolean;
+    value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -15,6 +16,7 @@ export function AuthInput(props: AuthInputProps) {
                 type={props.type}
                 placeholder={props.placeholder}
                 required={props.required}
+                value={props.value}
                 onChange={props.onChange}
                 className="w-full p-2 border border-secondary rounded-[8px] outline-primary placeholder:text-[15px] placeholder:text-secondary"
             />
