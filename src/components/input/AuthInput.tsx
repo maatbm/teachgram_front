@@ -11,7 +11,7 @@ interface AuthInputProps {
 
 export function AuthInput(props: AuthInputProps) {
     return (
-        <div className="w-full mb-3">
+        <div className="w-full mb-[9px]">
             <label className={`block mb-1 text-[15px] ${props.labelColor}`}>{props.label}</label>
             <input
                 type={props.type}
