@@ -1,5 +1,5 @@
 import * as UserTypes from "services/userService/user.types";
-import { createContext, useEffect, useState, useContext } from "react";
+import { createContext, useEffect, useState, useContext, useMemo } from "react";
 import { UserService } from "services/userService/user.service";
 import { setAuthToken } from "services/API";
 
@@ -70,13 +70,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem(localStorageTokenName);
   }
 
-  const contextValue: AuthContextType = {
+  const contextValue = useMemo(() => ({
     isAuthenticated,
     signin,
     signout,
     error,
     loading,
-  };
+  }), [isAuthenticated, signin, signout, error, loading]);
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
