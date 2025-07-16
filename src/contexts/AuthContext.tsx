@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Error on pre-loading token:", error);
       localStorage.removeItem(localStorageTokenName);
     } finally {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 1000);
     }
   }, []);
 
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Sign-in error:", error);
       setError("An error occurred during sign-in. Please try again.");
     } finally {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 1000);
     }
   }
 
