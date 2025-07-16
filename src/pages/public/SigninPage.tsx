@@ -61,7 +61,7 @@ export function SigninPage() {
                                 value={credentials.password}
                                 onChange={(e) => handleInputChange(e)}
                             />
-                            <div className="w-full flex text-[12px] text-terciary">
+                            <div className="w-full flex text-[12px] text-terciary mb-3">
                                 <div className="w-1/2 flex gap-3">
                                     <input
                                         type="checkbox"
