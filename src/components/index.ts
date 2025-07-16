@@ -4,3 +4,4 @@ export { SideImage } from './image/SideImage';
 export { TopImage } from './image/TopImage';
 export { AuthInput } from './input/AuthInput';
 export { Loading } from './loading/Loading';
+export { SigninError } from './error/SigninError';
