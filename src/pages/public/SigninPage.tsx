@@ -1,15 +1,33 @@
-import { SideImage, TopImage, AuthInput, PrimaryButton, SigninWithGoogleOrApple } from "components";
+import { SideImage, TopImage, AuthInput, PrimaryButton, SigninWithGoogleOrApple, SigninError } from "components";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import { type SignInRequest } from "services/userService/user.types";
+import { useAuth } from "contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function SigninPage() {
     const [rememberMe, setRememberMe] = useState(false);
-    const [credentials, setCredentials] = useState<SignInRequest>({mail: "", password: ""});
+    const [credentials, setCredentials] = useState<SignInRequest>({ mail: "", password: "" });
+    const { signin, error, isAuthenticated, loading } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/", { replace: true });
+        }
+    }, [isAuthenticated, navigate]);
+
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
         setCredentials((prev) => ({ ...prev, [name]: value }));
+    }
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        if (credentials.mail && credentials.password) {
+            await signin(credentials, rememberMe);
+        }
     }
 
     return (
@@ -20,7 +38,7 @@ export function SigninPage() {
                 </div>
                 <div className="w-[45%] mt-20">
                     <h2 className="text-quaternary font-semibold mb-5">Faça seu login</h2>
-                    <form className="w-full">
+                    <form className="w-full" onSubmit={handleSubmit}>
                         <AuthInput
                             label="E-mail"
                             labelColor="text-terciary"
@@ -57,7 +75,8 @@ export function SigninPage() {
                                 </Link>
                             </div>
                         </div>
-                        <PrimaryButton label="Entrar" />
+                        {error && <SigninError errorLabel={error} />}
+                        <PrimaryButton label={loading ? "Entrando..." : "Entrar"} disabled={loading} />
                     </form>
                     <div className="w-full flex justify-center items-center gap-1 text-[15px] mt-4 mb-4">
                         <label className="text-[15px] text-quaternary">Não possui conta?</label>
