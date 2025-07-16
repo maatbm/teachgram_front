@@ -82,7 +82,7 @@ export function SigninPage() {
                         </form>
                         <div className="w-full flex justify-center items-center gap-1 text-[15px] mt-4 mb-4">
                             <label className="text-[15px] text-quaternary">Não possui conta?</label>
-                            <Link to="/" className="text-primary underline font-bold">
+                            <Link to="/signup" className="text-primary underline font-bold">
                                 Cadastre-se
                             </Link>
                         </div>
