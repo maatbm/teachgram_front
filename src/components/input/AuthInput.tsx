@@ -20,6 +20,7 @@ export function AuthInput(props: AuthInputProps) {
                 name={props.name}
                 value={props.value}
                 onChange={props.onChange}
+                autoComplete="off"
                 className="w-full p-2 border border-secondary rounded-[8px] outline-primary placeholder:text-[15px] placeholder:text-secondary"
             />
         </div>
