@@ -1,13 +1,25 @@
-import teachgramLoading from "assets/components/loading/teachgramLoading.png";
+import teachgramLoading from "assets/components/loading/icon.png";
+import { useState, useEffect } from "react";
 
 export function Loading() {
+    const [dots, setDots] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setDots((prev) => (prev < 3 ? prev + 1 : 0));
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
-        <main className="w-screen h-screen flex items-center justify-center bg-primary">
+        <div className="w-full h-full flex flex-col fixed z-10 items-center justify-center bg-primary">
             <img
                 src={teachgramLoading}
                 alt="Loading"
-                className="w-1/3 h-1/3 object-contain"
+                className="w-1/5 h-1/5 object-contain"
             />
-        </main>
+            <span className="text-[25px] text-white font-semibold mt-3">{`Carregando${'.'.repeat(dots)}`}</span>
+        </div>
     );
 }
