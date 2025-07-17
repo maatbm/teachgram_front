@@ -1,7 +1,11 @@
 import teachgramLoading from "assets/components/loading/icon.png";
 import { useState, useEffect } from "react";
 
-export function Loading() {
+interface LoadingProps {
+    fixed?: boolean;
+}
+
+export function Loading({ fixed = false }: LoadingProps) {
     const [dots, setDots] = useState(0);
 
     useEffect(() => {
@@ -13,7 +17,7 @@ export function Loading() {
     }, []);
 
     return (
-        <div className="w-full h-full flex flex-col fixed z-10 items-center justify-center bg-primary">
+        <div className={`w-full h-full flex flex-col ${fixed ? "fixed z-10" : null} items-center justify-center bg-primary`}>
             <img
                 src={teachgramLoading}
                 alt="Loading"
