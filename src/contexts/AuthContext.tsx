@@ -2,6 +2,7 @@ import * as UserTypes from "services/userService/user.types";
 import { createContext, useEffect, useState, useContext, useMemo } from "react";
 import { UserService } from "services/userService/user.service";
 import { setAuthToken } from "services/API";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -19,6 +20,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    function handleUnauthorized() {
+      signout();
+      navigate("/signin");
+    };
+    window.addEventListener('unauthorized', handleUnauthorized);
+    return () => {
+      window.removeEventListener('unauthorized', handleUnauthorized);
+    };
+  }, [navigate]);
 
   useEffect(() => {
     try {
