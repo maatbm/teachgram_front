@@ -35,7 +35,7 @@ export function SignupPage() {
 
     return (
         <>
-            {loading && <Loading />}
+            {loading && <Loading fixed={true} />}
             <main className="w-full h-full flex items-center justify-center">
                 <div className="w-1/2 h-full flex flex-col">
                     <div className="w-full flex flex-col items-center self-start">

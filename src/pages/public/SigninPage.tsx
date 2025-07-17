@@ -32,7 +32,7 @@ export function SigninPage() {
 
     return (
         <>
-            {loading && <Loading />}
+            {loading && <Loading fixed={true} />}
             <main className="w-full h-full flex items-center justify-center">
                 <div className="w-1/2 h-full flex flex-col items-center justify-center">
                     <div className="w-[55%]">
