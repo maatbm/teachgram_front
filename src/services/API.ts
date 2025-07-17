@@ -14,3 +14,16 @@ export const API = axios.create({
 export const setAuthToken = (token: string | null) => {
   API.defaults.headers.common["Authorization"] = token;
 }
+
+API.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+
+  function (error) {
+    if (error.response && error.response.status === 401) {
+      window.dispatchEvent(new CustomEvent('unauthorized'));
+    }
+    return Promise.reject(error);
+  }
+);
