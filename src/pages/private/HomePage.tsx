@@ -1,15 +1,41 @@
-import { HomeSideMenu } from "components";
-import { useAuth } from "contexts/AuthContext";
+import { HomeSideMenu, Loading } from "components";
+import { useHome } from "hooks/useHome";
+import { useState } from "react";
+
+type component = 'feed' | 'friends' | 'profile' | 'config' | 'createPost';
 
 export function HomePage() {
-    const { user } = useAuth();
+    const { user, loading } = useHome();
+    const [component, setComponent] = useState<component>('feed');
+
+    function handleComponent() {
+        switch (component) {
+            case ('feed'): return "FEED";
+            case ('friends'): return "FRIENDS";
+            case ('profile'): return "PROFILE";
+            case ('config'): return "CONFIG";
+            case ('createPost'): return "CRIAR POST";
+        }
+    }
 
     return (
-        <main className="w-full h-full flex">
-            <div className="w-[20%] h-full">
-                <HomeSideMenu profilePicture={user?.profileLink} />
-            </div>
-            <div className="w-[80%] h-full"></div>
-        </main>
+        <>
+            {loading && <Loading fixed={true} />}
+            <main className="w-full h-full flex">
+                <div className="w-[20%] h-full">
+                    <HomeSideMenu
+                        profilePicture={user?.profileLink}
+                        feedFunction={() => setComponent('feed')}
+                        friendsFunction={() => setComponent('friends')}
+                        profileFunction={() => setComponent('profile')}
+                        configFunction={() => setComponent('config')}
+                        createPostFunction={() => setComponent('createPost')}
+                    />
+                </div>
+                <div className="w-[80%] h-full">
+                    {handleComponent()}
+                </div>
+            </main>
+        </>
     );
 }
