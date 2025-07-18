@@ -12,7 +12,7 @@ interface PostComponentProps {
 export function PostComponent(props: PostComponentProps) {
 
     return (
-        <div className="w-[75%] shadow-lg p-4 rounded-2xl" key={props.post.id}>
+        <div className="w-[75%] shadow-lg p-4 rounded-2xl border border-septenary" key={props.post.id}>
             <div className="w-full flex">
                 <div className="w-[74px]">
                     <img src={props.post.user.profileLink} alt="Profile image" className="rounded-circle" />
