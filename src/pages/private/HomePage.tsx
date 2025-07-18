@@ -1,4 +1,4 @@
-import { HomeSideMenu, Loading } from "components";
+import { HomeSideMenu, Loading, Feed } from "components";
 import { useHome } from "hooks/useHome";
 import { useState } from "react";
 
@@ -10,7 +10,7 @@ export function HomePage() {
 
     function handleComponent() {
         switch (component) {
-            case ('feed'): return "FEED";
+            case ('feed'): return (<Feed />);
             case ('friends'): return "FRIENDS";
             case ('profile'): return "PROFILE";
             case ('config'): return "CONFIG";
