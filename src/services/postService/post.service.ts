@@ -33,7 +33,7 @@ export class PostService {
     static async likePost(postId: number): Promise<number | ErrorResponse> {
         try {
             const response = await API.patch(`/post/like/${postId}`);
-            return response.data.likes as number;
+            return response.data as number
         } catch (error) {
             return ErrorHandler(error);
         }

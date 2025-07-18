@@ -47,3 +47,17 @@
     transform: scale(0.95);
   }
 }
+
+
+@keyframes like-pop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+}
+
+@utility heart-animation{
+  animation: like-pop 0.5s ease-in-out;
+}

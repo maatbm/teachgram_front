@@ -10,3 +10,4 @@ export { ReturnButton } from './button/ReturnButton';
 export { HomeSideMenu } from './homeSideMenu/HomeSideMenu';
 export { SideRight } from './sideRight/SideRight';
 export { Feed } from './feed/Feed';
+export { PostComponent } from './postComponent/PostComponent'; 
