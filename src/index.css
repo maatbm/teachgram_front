@@ -8,6 +8,7 @@
   --color-quaternary: #303030;
   --color-quinary: #0A0909;
   --color-senary: #E2E2E2;
+  --color-septenary: #8E8E8E;
 }
 
 * {
@@ -34,8 +35,15 @@
 }
 
 @utility hover-background-gray {
-  transition:  background-color 500ms ease-in-out;
+  transition: background-color 500ms ease-in-out;
   &:hover{
     background-color: #e5e5e5;
+  }
+}
+
+@utility click-decrease-size {
+  transition: transform 200ms ease-in-out;
+  &:active{
+    transform: scale(0.95);
   }
 }
