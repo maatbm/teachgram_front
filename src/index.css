@@ -7,6 +7,7 @@
   --color-terciary: #666666;
   --color-quaternary: #303030;
   --color-quinary: #0A0909;
+  --color-senary: #E2E2E2;
 }
 
 * {
@@ -30,4 +31,11 @@
 
 @utility rounded-circle {
   border-radius: 50%;
+}
+
+@utility hover-background-gray {
+  transition:  background-color 500ms ease-in-out;
+  &:hover{
+    background-color: #e5e5e5;
+  }
 }
