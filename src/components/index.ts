@@ -7,3 +7,4 @@ export { Loading } from './loading/Loading';
 export { SigninError } from './error/SigninError';
 export { SignupFirstForm } from './signupForm/SignupFirstForm';
 export { ReturnButton } from './button/ReturnButton';
+export { HomeSideMenu } from './homeSideMenu/HomeSideMenu';

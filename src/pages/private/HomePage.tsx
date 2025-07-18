@@ -1,5 +1,15 @@
+import { HomeSideMenu } from "components";
+import { useAuth } from "contexts/AuthContext";
+
 export function HomePage() {
+    const { user } = useAuth();
+
     return (
-        <h1>PAGINA DO FEED</h1>
+        <main className="w-full h-full flex">
+            <div className="w-[20%] h-full">
+                <HomeSideMenu profilePicture={user?.profileLink} />
+            </div>
+            <div className="w-[80%] h-full"></div>
+        </main>
     );
 }
