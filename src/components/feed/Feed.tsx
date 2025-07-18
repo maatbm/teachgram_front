@@ -1,18 +1,28 @@
 import { SideRight } from "components/sideRight/SideRight";
 import { useFeed } from "hooks";
 import { PostComponent } from "../postComponent/PostComponent";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 export function Feed() {
-    const { posts, likePost } = useFeed();
+    const { posts, likePost, getPosts } = useFeed();
     return (
         <div className="w-full h-full flex">
-            <div className="w-[82%] h-full flex flex-col items-center py-10 gap-9">
-                {posts.map((post) => {
-                    return (
-                        <PostComponent post={post} likeFunction={likePost} />
-                    );
-                })}
+            <div id="scrollableDiv" className="w-[82%] h-full overflow-y-auto">
+                <InfiniteScroll className="w-full flex flex-col items-center py-9 gap-9"
+                    dataLength={posts.length}
+                    next={getPosts}
+                    hasMore={true}
+                    loader={<h1 className="text-center text-primary text-[25px] mt-3">Carregando...</h1>}
+                    endMessage={<h1 className="text-center text-primary text-[25px] mt-3">Você chegou no final!</h1>}
+                    scrollableTarget="scrollableDiv"
+                >
+                    {posts.map((post) => {
+                        return (
+                            <PostComponent post={post} likeFunction={likePost} />
+                        );
+                    })}
+                </InfiniteScroll>
             </div>
             <div className="w-[18%] h-full">
                 <SideRight />

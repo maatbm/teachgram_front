@@ -4,14 +4,12 @@ import { PostService } from "services/postService/post.service";
 
 export function useFeed() {
     const [posts, setPosts] = useState<PostTypes.PostResponse[]>([]);
-    const [hasMore, setHasMore] = useState<boolean>();
     const [page, setPage] = useState<number>(0);
 
     async function getPosts() {
         const response = await PostService.getFeedposts(page, 5);
         if ("posts" in response) {
             setPosts(prevPosts => [...prevPosts, ...response.posts]);
-            setHasMore(response.hasMore);
             if (page < response.totalPages) {
                 setPage(prevPage => prevPage + 1);
             }
@@ -33,5 +31,5 @@ export function useFeed() {
         getPosts();
     }, []);
 
-    return { getPosts, posts, hasMore, likePost };
+    return { getPosts, posts, likePost};
 }
