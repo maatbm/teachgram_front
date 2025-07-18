@@ -6,13 +6,16 @@ export const API = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: null,
   },
   timeout: 10000,
 });
 
 export const setAuthToken = (token: string | null) => {
-  API.defaults.headers.common["Authorization"] = token;
+  if (token) {
+    API.defaults.headers.common["Authorization"] = token;
+  } else {
+    delete API.defaults.headers.common["Authorization"];
+  }
 }
 
 API.interceptors.response.use(
@@ -21,7 +24,7 @@ API.interceptors.response.use(
   },
 
   function (error) {
-    if (error.response && error.response.status === 401) {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
       window.dispatchEvent(new CustomEvent('unauthorized'));
     }
     return Promise.reject(error);
