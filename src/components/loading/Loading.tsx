@@ -17,7 +17,7 @@ export function Loading({ fixed = false }: LoadingProps) {
     }, []);
 
     return (
-        <div className={`w-full h-full flex flex-col ${fixed ? "fixed z-10" : null} items-center justify-center bg-primary`}>
+        <div className={`w-full h-full flex flex-col ${fixed ? "fixed z-10 top-0 left-0" : null} items-center justify-center bg-primary`}>
             <img
                 src={teachgramLoading}
                 alt="Loading"

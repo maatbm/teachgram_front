@@ -1,4 +1,4 @@
-import { HomeSideMenu, Loading, Feed } from "components";
+import { HomeSideMenu, Loading, Feed, Profile } from "components";
 import { useHome } from "hooks/useHome";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ export function HomePage() {
         switch (component) {
             case ('feed'): return (<Feed />);
             case ('friends'): return "FRIENDS";
-            case ('profile'): return "PROFILE";
+            case ('profile'): return (<Profile />);
             case ('config'): return "CONFIG";
             case ('createPost'): return "CRIAR POST";
         }
@@ -32,7 +32,7 @@ export function HomePage() {
                         createPostFunction={() => setComponent('createPost')}
                     />
                 </div>
-                <div className="w-[80%] h-full">
+                <div className="w-[80%] h-full flex flex-col items-center">
                     {handleComponent()}
                 </div>
             </main>

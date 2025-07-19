@@ -11,3 +11,4 @@ export { HomeSideMenu } from './homeSideMenu/HomeSideMenu';
 export { SideRight } from './sideRight/SideRight';
 export { Feed } from './feed/Feed';
 export { PostComponent } from './postComponent/PostComponent'; 
+export { Profile } from './profile/Profile';

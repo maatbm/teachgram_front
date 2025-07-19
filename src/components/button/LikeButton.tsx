@@ -18,7 +18,7 @@ export function LikeBUtton(props: LikeButtonProps) {
     };
 
     return (
-        <button onClick={handleClick} className="like-button">
+        <button onClick={handleClick} className="like-button cursor-pointer">
             {isAnimating ? (
                 <FaHeart className="text-primary text-[28px] heart-animation" />
             ) : (
