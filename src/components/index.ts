@@ -12,3 +12,5 @@ export { SideRight } from './sideRight/SideRight';
 export { Feed } from './feed/Feed';
 export { PostComponent } from './postComponent/PostComponent'; 
 export { Profile } from './profile/Profile';
+export { Modal } from './modal/Modal';
+export { ConfigInitial } from './configInitial/ConfigInitial';
