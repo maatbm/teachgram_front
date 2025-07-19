@@ -5,11 +5,13 @@ import { PostService } from "services/postService/post.service";
 export function useFeed() {
     const [posts, setPosts] = useState<PostTypes.PostResponse[]>([]);
     const [page, setPage] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState(0);
 
     async function getPosts() {
         const response = await PostService.getFeedposts(page, 5);
         if ("posts" in response) {
             setPosts(prevPosts => [...prevPosts, ...response.posts]);
+            setTotalPages(response.totalPages);
             if (page < response.totalPages) {
                 setPage(prevPage => prevPage + 1);
             }
@@ -30,6 +32,6 @@ export function useFeed() {
     useEffect(() => {
         getPosts();
     }, []);
-
-    return { getPosts, posts, likePost};
+    const hasMore = page < totalPages;
+    return { getPosts, posts, likePost, hasMore };
 }
