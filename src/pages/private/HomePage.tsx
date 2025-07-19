@@ -30,6 +30,8 @@ export function HomePage() {
                         profileFunction={() => setComponent('profile')}
                         configFunction={() => setComponent('config')}
                         createPostFunction={() => setComponent('createPost')}
+                        returnFunction={()=>setComponent('feed')}
+                        component={component}
                     />
                 </div>
                 <div className="w-[80%] h-full flex flex-col items-center">

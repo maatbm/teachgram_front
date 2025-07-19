@@ -1,4 +1,4 @@
-import { TopImage } from "components";
+import { TopImage, ReturnButton } from "components";
 import homeImage from "assets/components/homeSideMenu/home.png";
 import friendsImage from "assets/components/homeSideMenu/friends.png";
 import configImage from "assets/components/homeSideMenu/config.png";
@@ -12,12 +12,17 @@ interface HomeSideMenuProps {
     profileFunction: () => void;
     configFunction: () => void;
     createPostFunction: () => void;
+    returnFunction: () => void;
+    component: string;
 }
 
 export function HomeSideMenu(props: HomeSideMenuProps) {
     return (
         <div className="w-full h-full flex flex-col p-8 gap-5 items-center">
-            <TopImage />
+            <div className="w-full flex">
+                {props.component != 'feed' ? <ReturnButton w="w-1/4" function={props.returnFunction} /> : null}
+                <TopImage />
+            </div>
             <div
                 className="w-full p-3 flex items-center gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
                 role="button"
