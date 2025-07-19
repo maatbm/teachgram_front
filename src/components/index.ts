@@ -14,3 +14,4 @@ export { PostComponent } from './postComponent/PostComponent';
 export { Profile } from './profile/Profile';
 export { Modal } from './modal/Modal';
 export { ConfigInitial } from './configInitial/ConfigInitial';
+export { EditProfile } from './editProfile/EditProfile';
