@@ -1,4 +1,4 @@
-import { SideRight, ReturnButton, ConfigInitial, EditProfile } from "components";
+import { SideRight, ReturnButton, ConfigInitial, EditProfile, EditAccount } from "components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ export function ConfigPage() {
     function handleComponent() {
         switch (component) {
             case ('initial'): return (<ConfigInitial setAccountConfig={() => setComponent('accountConfig')} setEditprofile={() => setComponent('editProfile')} />);
-            case ('accountConfig'): return ("ACCOUNT CONFIG");
+            case ('accountConfig'): return (<EditAccount />);
             case ('editProfile'): return (<EditProfile />);
         }
     }
