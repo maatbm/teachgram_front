@@ -3,22 +3,20 @@ import { useHome } from "hooks/useHome";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type component = 'feed' | 'friends' | 'profile' | 'config' | 'createPost';
+type component = 'feed' | 'friends' | 'profile' | 'config';
 
 export function HomePage() {
     const { user, loading } = useHome();
     const [component, setComponent] = useState<component>('feed');
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
 
     function handleComponent() {
         switch (component) {
             case ('feed'): return (<Feed />);
             case ('friends'): return "FRIENDS";
             case ('profile'): return (<Profile />);
-            case ('config'):
-                navigate("/config");
-                return null;
-            case ('createPost'): return (<CreatePost />);
+            case ('config'): navigate("/config");
         }
     }
 
@@ -33,7 +31,7 @@ export function HomePage() {
                         friendsFunction={() => setComponent('friends')}
                         profileFunction={() => setComponent('profile')}
                         configFunction={() => setComponent('config')}
-                        createPostFunction={() => setComponent('createPost')}
+                        createPostFunction={() => setShowModal(true)}
                         returnFunction={() => setComponent('feed')}
                         component={component}
                     />
@@ -41,6 +39,7 @@ export function HomePage() {
                 <div className="w-[80%] h-full flex flex-col items-center">
                     {handleComponent()}
                 </div>
+                <CreatePost showModal={showModal} close={() => setShowModal(false)} />
             </main>
         </>
     );
