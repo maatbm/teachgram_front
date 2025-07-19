@@ -1,4 +1,4 @@
-import { HomeSideMenu, Loading, Feed, Profile } from "components";
+import { HomeSideMenu, Loading, Feed, Profile, CreatePost } from "components";
 import { useHome } from "hooks/useHome";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ export function HomePage() {
             case ('config'):
                 navigate("/config");
                 return null;
-            case ('createPost'): return "CRIAR POST";
+            case ('createPost'): return (<CreatePost />);
         }
     }
 
