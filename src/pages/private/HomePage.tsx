@@ -1,4 +1,4 @@
-import { HomeSideMenu, Loading, Feed, Profile, ConfigComponent } from "components";
+import { HomeSideMenu, Loading, Feed, Profile } from "components";
 import { useHome } from "hooks/useHome";
 import { useState } from "react";
 
@@ -13,7 +13,7 @@ export function HomePage() {
             case ('feed'): return (<Feed />);
             case ('friends'): return "FRIENDS";
             case ('profile'): return (<Profile />);
-            case ('config'): return (<ConfigComponent />);
+            case ('config'): return "CONFIG";
             case ('createPost'): return "CRIAR POST";
         }
     }
@@ -30,7 +30,7 @@ export function HomePage() {
                         profileFunction={() => setComponent('profile')}
                         configFunction={() => setComponent('config')}
                         createPostFunction={() => setComponent('createPost')}
-                        returnFunction={() => setComponent('feed')}
+                        returnFunction={()=>setComponent('feed')}
                         component={component}
                     />
                 </div>

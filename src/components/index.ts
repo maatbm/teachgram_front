@@ -12,4 +12,3 @@ export { SideRight } from './sideRight/SideRight';
 export { Feed } from './feed/Feed';
 export { PostComponent } from './postComponent/PostComponent'; 
 export { Profile } from './profile/Profile';
-export { ConfigComponent } from './configComponent/ConfigComponent';
