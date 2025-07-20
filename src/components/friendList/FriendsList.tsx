@@ -91,7 +91,7 @@ export function FriendsList({ closeModal }: FriendsListProps) {
                                         <p className="text-sm text-septenary">{friend.name}</p>
                                     </div>
                                 </div>
-                                <button className="bg-primary text-white text-sm font-semibold py-1 px-4 rounded-lg hover:bg-red-700 duration-300">
+                                <button className="bg-primary text-white text-sm font-semibold py-1 cursor-pointer px-4 rounded-lg hover:bg-red-700 duration-300">
                                     Ver perfil
                                 </button>
                             </li>
