@@ -3,7 +3,11 @@ import { useFeed } from "hooks";
 import { PostComponent } from "../postComponent/PostComponent";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export function Feed() {
+interface FeedProps {
+    showProfile: (userId: number) => void;
+}
+
+export function Feed({ showProfile }: FeedProps) {
     const { posts, likePost, getPosts, hasMore } = useFeed();
     return (
         <div className="w-full h-full flex">
@@ -18,7 +22,7 @@ export function Feed() {
                 >
                     {posts.map((post) => {
                         return (
-                            <PostComponent post={post} likeFunction={likePost} />
+                            <PostComponent post={post} likeFunction={likePost} showProfile={showProfile} />
                         );
                     })}
                 </InfiniteScroll>

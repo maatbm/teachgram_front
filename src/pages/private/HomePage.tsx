@@ -15,7 +15,7 @@ export function HomePage() {
 
     function handleComponent() {
         switch (component) {
-            case ('feed'): return (<Feed />);
+            case ('feed'): return (<Feed showProfile={handleShowProfile}/>);
             case ('profile'): return (<Profile />);
             case ('config'): navigate("/config"); break;
             case ('otherProfile'):

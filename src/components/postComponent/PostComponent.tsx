@@ -13,6 +13,7 @@ import { Loading } from "components/loading/Loading";
 interface PostComponentProps {
     post: PostResponse;
     likeFunction: (postId: number) => void;
+    showProfile: (userId: number) => void;
 }
 
 export function PostComponent(props: PostComponentProps) {
@@ -46,11 +47,11 @@ export function PostComponent(props: PostComponentProps) {
             {loading && <Loading fixed={true} />}
             <div className="w-[75%] shadow-lg p-4 rounded-2xl border border-septenary" key={props.post.id}>
                 <div className="w-full flex relative">
-                    <div className="w-[74px]">
+                    <div className="w-[74px] cursor-pointer" onClick={() => props.showProfile(props.post.user.id)}>
                         <img src={props.post.user.profileLink} alt="Profile image" className="rounded-circle" />
                     </div>
                     <div className="w-full ml-3 flex flex-col justify-center">
-                        <span className="text-[25px] text-septenary">{props.post.user.username}</span>
+                        <span className="text-[25px] text-septenary cursor-pointer" onClick={() => props.showProfile(props.post.user.id)}>{props.post.user.username}</span>
                         <span className="text-[20px] text-septenary">{formatDistanceToNow(new Date(props.post.createdAt), { addSuffix: true, locale: ptBR })}</span>
                     </div>
                     {props.post.user.id === user?.id ? <div className="w-[5%] cursor-pointer hover:scale-[1.1] duration-500 ease-in-out">
