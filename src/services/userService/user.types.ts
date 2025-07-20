@@ -18,6 +18,7 @@ export interface UserResponse {
     profileLink: string;
     totalPosts: number;
     totalFriends: number;
+    isFriend?: boolean;
 }
 
 export interface SignInRequest {

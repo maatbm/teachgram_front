@@ -1,13 +1,18 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loading } from "../loading/Loading";
 import { useOtherProfile } from "hooks";
+import icon from "assets/components/otherProfile/Vector 81.png";
 
 interface OtherProfileProps {
     userId: number
 }
 
 export function OtherProfile(props: OtherProfileProps) {
-    const { posts, loading, hasMore, user, getPosts } = useOtherProfile(props.userId);
+    const { posts, loading, hasMore, user, getPosts, addFriend } = useOtherProfile(props.userId);
+
+    const handleAddFriend = async () => {
+        await addFriend();
+    }
 
     return (
         <>
@@ -20,9 +25,27 @@ export function OtherProfile(props: OtherProfileProps) {
                     <div className="w-full flex flex-col justify-center ml-5">
                         <span className="font-semibold text-quaternary text-[25px]">{user?.name}</span>
                         <span className="text-[20px] text-terciary">{user?.description}</span>
+                        <div className="mt-2">
+                            {user?.isFriend ? (
+                                <div className="w-1/6 border border-terciary flex items-center p-2 rounded-xl justify-between">
+                                    <span className="text-[15px] text-terciary">Amigos</span>
+                                    <img src={icon} className="w-[15px]"/>
+                                </div>
+                            ) : (
+                                <div className="w-1/6">
+                                    <button
+                                        className="w-full mt-3 bg-primary rounded-xl p-2 font-semibold text-center text-white text-[15px] shadow cursor-pointer hover:bg-red-800 duration-500 ease-in-out click-decrease-size"
+                                        onClick={handleAddFriend}
+                                        disabled={loading}
+                                    >
+                                        Adicionar
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-center">
+                <div className="w-full flex justify-center mt-4">
                     <div className="w-[25%] flex">
                         <div className="w-1/2 flex flex-col items-center">
                             <span className="font-bold text-[20px] text-quaternary">{user?.totalPosts}</span>

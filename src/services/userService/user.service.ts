@@ -69,7 +69,7 @@ export class UserService {
 
   static async addFriend(friendId: number): Promise<ErrorResponse | void> {
     try {
-      await API.post(`/friendship/add${friendId}`);
+      await API.post(`/friendship/add/${friendId}`);
     } catch (error) {
       return ErrorHandler(error);
     }
