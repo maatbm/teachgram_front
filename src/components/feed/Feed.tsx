@@ -3,7 +3,6 @@ import { useFeed } from "hooks";
 import { PostComponent } from "../postComponent/PostComponent";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-
 export function Feed() {
     const { posts, likePost, getPosts, hasMore } = useFeed();
     return (
