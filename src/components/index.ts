@@ -17,3 +17,4 @@ export { ConfigInitial } from './configInitial/ConfigInitial';
 export { EditProfile } from './editProfile/EditProfile';
 export { EditAccount } from './editAccount/EditAccount';
 export { CreatePost } from './createPost/CreatePosts';
+export { FriendsList } from './friendList/FriendsList';

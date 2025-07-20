@@ -1,20 +1,20 @@
-import { HomeSideMenu, Loading, Feed, Profile, CreatePost } from "components";
+import { HomeSideMenu, Loading, Feed, Profile, CreatePost, Modal, FriendsList } from "components"; // Adicione Modal e FriendsList
 import { useAuth } from "contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type component = 'feed' | 'friends' | 'profile' | 'config';
+type component = 'feed' | 'profile' | 'config';
 
 export function HomePage() {
     const { user, loading } = useAuth();
     const [component, setComponent] = useState<component>('feed');
     const navigate = useNavigate();
-    const [showModal, setShowModal] = useState(false);
+    const [showCreatePostModal, setShowCreatePostModal] = useState(false);
+    const [showFriendsModal, setShowFriendsModal] = useState(false);
 
     function handleComponent() {
         switch (component) {
             case ('feed'): return (<Feed />);
-            case ('friends'): return "FRIENDS";
             case ('profile'): return (<Profile />);
             case ('config'): navigate("/config");
         }
@@ -28,10 +28,10 @@ export function HomePage() {
                     <HomeSideMenu
                         profilePicture={user?.profileLink}
                         feedFunction={() => setComponent('feed')}
-                        friendsFunction={() => setComponent('friends')}
+                        friendsFunction={() => setShowFriendsModal(true)}
                         profileFunction={() => setComponent('profile')}
                         configFunction={() => setComponent('config')}
-                        createPostFunction={() => setShowModal(true)}
+                        createPostFunction={() => setShowCreatePostModal(true)}
                         returnFunction={() => setComponent('feed')}
                         component={component}
                     />
@@ -39,7 +39,10 @@ export function HomePage() {
                 <div className="w-[80%] h-full flex flex-col items-center">
                     {handleComponent()}
                 </div>
-                <CreatePost showModal={showModal} close={() => setShowModal(false)} />
+                <CreatePost showModal={showCreatePostModal} close={() => setShowCreatePostModal(false)} />
+                <Modal open={showFriendsModal}>
+                    <FriendsList closeModal={() => setShowFriendsModal(false)} />
+                </Modal>
             </main>
         </>
     );
