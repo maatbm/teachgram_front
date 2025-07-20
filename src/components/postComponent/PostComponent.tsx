@@ -21,7 +21,7 @@ export function PostComponent(props: PostComponentProps) {
     const toolboxRef = useRef<HTMLDivElement>(null);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContet] = useState<'delete' | 'edit'>();
-    const { updatePost, loading, error, handleInput, handlePrivacy } = useUpdatePost();
+    const { updatePost, loading, error, handleInput, handlePrivacy, deletePost } = useUpdatePost();
 
     function toggleToolbox() {
         setIsToolboxOpen(!isToolboxOpen);
@@ -64,7 +64,12 @@ export function PostComponent(props: PostComponentProps) {
                             >
                                 Editar
                             </button>
-                            <button className="w-full text-primary text-center font-semibold text-[15px] mt-3 cursor-pointer hover:text-red-800 duration-300 ease-in-out">Excluir</button>
+                            <button
+                                className="w-full text-primary text-center font-semibold text-[15px] mt-3 cursor-pointer hover:text-red-800 duration-300 ease-in-out"
+                                onClick={() => { setModalContet('delete'); setShowModal(true); }}
+                            >
+                                Excluir
+                            </button>
                         </div>
                     )}
                 </div>
@@ -96,7 +101,25 @@ export function PostComponent(props: PostComponentProps) {
                         updatePostFunction={() => updatePost(props.post.id)}
                         error={error}
                     />
-                    : null}
+                    :
+                    <div className="w-1/3 bg-white p-5 rounded-2xl">
+                        <h1 className="text-center font-semibold text-[25px] text-quaternary">Excluir publicação?</h1>
+                        <div className="w-full flex justify-around mt-4">
+                            <button
+                                className="border border-primary text-primary w-1/3 rounded-md text-[15px] cursor-pointer hover:bg-secondary duration-500 ease-in-out"
+                                onClick={() => setShowModal(false)}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className="w-1/3 bg-primary rounded-md text-white cursor-pointer hover:bg-red-800 duration-500 ease-in-out"
+                                onClick={() => { deletePost(props.post.id); setShowModal(false) }}
+                            >
+                                Confirmar
+                            </button>
+                        </div>
+                    </div>
+                }
             </Modal>
         </>
     );

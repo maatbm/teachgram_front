@@ -31,5 +31,16 @@ export function useUpdatePost() {
         setLoading(false);
     }
 
-    return { updatePost, loading, error, handleInput, handlePrivacy }
+    async function deletePost(postId: number) {
+        try {
+            setLoading(true);
+            await PostService.deletePost(postId);
+        } catch (error) {
+            alert(error);
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return { updatePost, loading, error, handleInput, handlePrivacy, deletePost }
 }
