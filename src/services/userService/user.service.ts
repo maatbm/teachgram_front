@@ -66,4 +66,29 @@ export class UserService {
       return ErrorHandler(error);
     }
   }
+
+  static async addFriend(friendId: number): Promise<ErrorResponse | void> {
+    try {
+      await API.post(`/friendship/add${friendId}`);
+    } catch (error) {
+      return ErrorHandler(error);
+    }
+  }
+
+  static async removeFriend(friendId: number): Promise<ErrorResponse | void> {
+    try {
+      await API.delete(`/friendship/${friendId}`);
+    } catch (error) {
+      return ErrorHandler(error);
+    }
+  }
+
+  static async getFriends(): Promise<UserTypes.AllNonDeletedUsersResponse | ErrorResponse> {
+    try {
+      const response = await API.get("/user/friends");
+      return response.data as UserTypes.AllNonDeletedUsersResponse;
+    } catch (error) {
+      return ErrorHandler(error);
+    }
+  }
 }
