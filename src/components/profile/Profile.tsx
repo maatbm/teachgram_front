@@ -1,9 +1,11 @@
 import { useProfile } from "hooks";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loading } from "../loading/Loading";
+import { useAuth } from "contexts/AuthContext";
 
 export function Profile() {
-    const { user, posts, loading, getUserPosts, hasMore, totalPosts } = useProfile();
+    const { posts, loading, getUserPosts, hasMore, totalPosts } = useProfile();
+    const { user } = useAuth();
 
     return (
         <>

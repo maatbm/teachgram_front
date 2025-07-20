@@ -2,9 +2,11 @@ import { useEditProfile } from "hooks";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "components/loading/Loading";
 import { SigninError } from "components/error/SigninError";
+import { useAuth } from "contexts/AuthContext";
 
 export function EditProfile() {
-    const { user, loading, handleInputChange, updateUser, error } = useEditProfile();
+    const { loading, handleInputChange, updateUser, error } = useEditProfile();
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     return (

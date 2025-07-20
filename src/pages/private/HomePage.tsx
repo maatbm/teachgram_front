@@ -1,12 +1,12 @@
 import { HomeSideMenu, Loading, Feed, Profile, CreatePost } from "components";
-import { useHome } from "hooks/useHome";
+import { useAuth } from "contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type component = 'feed' | 'friends' | 'profile' | 'config';
 
 export function HomePage() {
-    const { user, loading } = useHome();
+    const { user, loading } = useAuth();
     const [component, setComponent] = useState<component>('feed');
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);

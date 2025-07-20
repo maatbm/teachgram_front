@@ -1,13 +1,12 @@
 import { PostService } from "services/postService/post.service";
 import { useState, useEffect } from "react";
 import type { PostResponse } from "services/postService/post.types";
-import { type UserResponse } from "services/userService/user.types";
-import { UserService } from "services/userService/user.service";
+import { useAuth } from "contexts/AuthContext";
 
 export function useProfile() {
     const [posts, setPosts] = useState<PostResponse[]>([]);
     const [page, setPage] = useState(0);
-    const [user, setUser] = useState<UserResponse>();
+    const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [totalPages, setTotalPages] = useState(1);
@@ -23,28 +22,10 @@ export function useProfile() {
             if (page < response.totalPages - 1) {
                 setPage(prevPage => prevPage + 1);
             }
+        } else {
+            setError(response.message);
         }
     }
-
-    async function getUser() {
-        try {
-            const response = await UserService.getAuthenticatedUserProfile();
-            if ("id" in response) {
-                setUser(response);
-            } else {
-                setError(response.message);
-                console.log(response.message)
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-
-
-    useEffect(() => {
-        getUser();
-    }, []);
 
     useEffect(() => {
         async function fetchPosts() {
@@ -60,5 +41,5 @@ export function useProfile() {
     }, [user]);
 
     const hasMore = page < totalPages - 1;
-    return { user, posts, getUserPosts, loading, error, hasMore, totalPosts }
+    return { posts, getUserPosts, loading, error, hasMore, totalPosts }
 }

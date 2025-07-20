@@ -4,8 +4,8 @@ import { SigninError } from "components/error/SigninError";
 import { useAuth } from "contexts/AuthContext";
 
 export function EditAccount() {
-    const { user, loading, handleInputChange, updateUser, error } = useEditProfile();
-    const { signout } = useAuth();
+    const { loading, handleInputChange, updateUser, error } = useEditProfile();
+    const { signout, user } = useAuth();
 
     return (
         <>
