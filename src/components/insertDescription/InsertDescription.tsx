@@ -38,7 +38,7 @@ export function InsertDescription(props: InsertDescriptionProps) {
                 <button
                     className="mt-3 text-primary underline cursor-pointer hover:text-red-800 duration-500 ease-in-out"
                     onClick={() => props.createPostFunction()}
-                >Avançar</button>
+                >Compartilhar</button>
             </form>
         </div>
     );
