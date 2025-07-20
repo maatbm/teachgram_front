@@ -6,7 +6,7 @@ import { LikeBUtton } from "../button/LikeButton";
 import { useAuth } from "contexts/AuthContext";
 import { useState, useRef, useEffect } from "react";
 import { Modal } from "components/modal/Modal";
-import { Updatepost } from "assets/components/updatePost/UpdatePost";
+import { Updatepost } from "components/updatePost/UpdatePost";
 import { useUpdatePost } from "hooks/useUpdatePost";
 import { Loading } from "components/loading/Loading";
 
