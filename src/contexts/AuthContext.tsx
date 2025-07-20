@@ -1,5 +1,5 @@
 import * as UserTypes from "services/userService/user.types";
-import { createContext, useEffect, useState, useContext, useMemo } from "react";
+import { createContext, useEffect, useState, useContext, useMemo, useCallback } from "react";
 import { UserService } from "services/userService/user.service";
 import { setAuthToken } from "services/API";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ interface AuthContextType {
   signout: () => void;
   error: string | null;
   loading: boolean;
+  user: UserTypes.UserResponse | null;
 }
 
 const localStorageTokenName = "teachgram_jwt";
@@ -20,10 +21,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<UserTypes.UserResponse | null>(null);
   const navigate = useNavigate();
 
+  const getUser = useCallback(async () => {
+    try {
+      const response = await UserService.getAuthenticatedUserProfile();
+      if ("id" in response) {
+        setIsAuthenticated(true);
+        setUser(response);
+      } else {
+        setIsAuthenticated(false);
+        setUser(null);
+        setError(response.message);
+      }
+    } catch (err) {
+      setIsAuthenticated(false);
+      setUser(null);
+    }
+  }, []); 
+
+  const signout = useCallback(() => {
+    setAuthToken(null);
+    setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem(localStorageTokenName);
+  }, []);
+
   useEffect(() => {
-    function handleUnauthorized() {
+    const handleUnauthorized = () => {
       signout();
       navigate("/signin");
     };
@@ -31,38 +57,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       window.removeEventListener('unauthorized', handleUnauthorized);
     };
-  }, [navigate]);
+  }, [navigate, signout]);
 
   useEffect(() => {
-    try {
+    const initializeAuth = async () => {
       const tokenString = localStorage.getItem(localStorageTokenName);
       if (tokenString) {
-        const parsedToken: UserTypes.JwtTokenResponse = JSON.parse(tokenString);
-        if (parsedToken && parsedToken.token && parsedToken.expiration > Date.now()) {
-          setAuthToken(parsedToken.type + parsedToken.token);
-          setIsAuthenticated(true);
-        } else {
+        try {
+          const parsedToken: UserTypes.JwtTokenResponse = JSON.parse(tokenString);
+          if (parsedToken?.token && parsedToken.expiration > Date.now()) {
+            setAuthToken(parsedToken.type + parsedToken.token);
+            await getUser();
+          } else {
+            localStorage.removeItem(localStorageTokenName);
+          }
+        } catch (error) {
+          console.error("Error on pre-loading token:", error);
           localStorage.removeItem(localStorageTokenName);
-          setAuthToken(null);
-          setIsAuthenticated(false);
         }
       }
-    } catch (error) {
-      console.error("Error on pre-loading token:", error);
-      localStorage.removeItem(localStorageTokenName);
-    } finally {
-      setTimeout(() => setLoading(false), 1000);
-    }
-  }, []);
+      setLoading(false);
+    };
+    initializeAuth();
+  }, [getUser]);
 
-  async function signin(credentials: UserTypes.SignInRequest, rememberMe: boolean) {
+  const signin = useCallback(async (credentials: UserTypes.SignInRequest, rememberMe: boolean) => {
     setError(null);
     setLoading(true);
     try {
       const response = await UserService.signin(credentials);
       if ("token" in response) {
         setAuthToken(response.type + response.token);
-        setIsAuthenticated(true);
+        await getUser();
         if (rememberMe) {
           localStorage.setItem(localStorageTokenName, JSON.stringify(response));
         }
@@ -73,15 +99,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Sign-in error:", error);
       setError("An error occurred during sign-in. Please try again.");
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
-  }
-
-  function signout() {
-    setAuthToken(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem(localStorageTokenName);
-  }
+  }, [getUser]);
 
   const contextValue = useMemo(() => ({
     isAuthenticated,
@@ -89,10 +111,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     signout,
     error,
     loading,
-  }), [isAuthenticated, signin, signout, error, loading]);
+    user
+  }), [isAuthenticated, signin, signout, error, loading, user]);
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>
+      {loading ? <p>Carregando...</p> : children}
+    </AuthContext.Provider>
   );
 };
 
