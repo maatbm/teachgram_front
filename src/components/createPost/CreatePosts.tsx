@@ -5,6 +5,8 @@ import { InsertImagepost } from "components/insertImagePost/InsertImagePost";
 import { useCreatePost } from "hooks";
 import { Loading } from "components/loading/Loading";
 import { PreviewImage } from "components/previewImage/PreviewImage";
+import { InsertDescription } from "components/insertDescription/InsertDescription";
+import { SigninError } from "components/error/SigninError";
 
 type component = 'insertImage' | 'previewImage' | 'insertDescription';
 
@@ -15,13 +17,18 @@ interface CreatePostProps {
 
 export function CreatePost(props: CreatePostProps) {
     const [component, setComponent] = useState<component>('insertImage');
-    const { handleInput, loading, post } = useCreatePost();
+    const { handleInput, loading, post, handlePrivacity, createPost, error } = useCreatePost();
 
     function handleComponent() {
         switch (component) {
             case ('insertImage'): return (<InsertImagepost onChangeFunction={(e) => handleInput(e)} onClickFunction={() => setComponent('previewImage')} />);
             case ('previewImage'): return (<PreviewImage image={post.photoLink} next={() => setComponent('insertDescription')} />);
-            case ('insertDescription'): return ("INSERT DESCRIPTION");
+            case ('insertDescription'): return (<InsertDescription
+                srcImage={post.photoLink}
+                handleInputChange={(e) => handleInput(e)}
+                handlePrivacity={(e) => handlePrivacity(e)}
+                createPostFunction={() => createPost()}
+            />);
         }
     }
 
@@ -36,6 +43,7 @@ export function CreatePost(props: CreatePostProps) {
                 <div>
                     {handleComponent()}
                 </div>
+                {error && <SigninError errorLabel={error}/>}
             </div>
         </Modal>
     )

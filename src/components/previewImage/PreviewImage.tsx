@@ -8,9 +8,9 @@ interface PreviewImageProps {
 export function PreviewImage(props: PreviewImageProps) {
     return (
         <div className="w-full flex flex-col justify-center items-center">
-            <img src={props.image ? props.image : imageIcon} alt="Preview image" className="w-[80%] mt-3" />
+            <img src={props.image ? props.image : imageIcon} alt="Preview image" className="w-[70%] mt-3" />
             <button
-                className="mt-3 text-primary underline cursor-pointer"
+                className="mt-3 text-primary underline cursor-pointer hover:text-red-800 duration-500 ease-in-out"
                 onClick={() => props.next()}
             >Avançar</button>
         </div>

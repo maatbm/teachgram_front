@@ -22,16 +22,24 @@ export function useCreatePost() {
         setPost((prev) => ({ ...prev, [name]: value }));
     }
 
+    function handlePrivacity(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name, checked } = e.target;
+        setPost((prev) => ({ ...prev, [name]: checked }));
+    }
+
     async function createPost() {
         setLoading(true)
         setError("");
         const response = await PostService.createPost(post);
         if ("id" in response) {
+            console.log("post criado com sucesso")
             navigate("/", { replace: true });
         } else {
             setError(response.message);
+            alert(response.message);
         }
+        setLoading(false);
     }
 
-    return { handleInput, createPost, loading, error, post }
+    return { handleInput, handlePrivacity, createPost, loading, error, post }
 }

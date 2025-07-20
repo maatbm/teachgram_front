@@ -14,11 +14,12 @@ export function InsertImagepost(props: InsertImagePostProps) {
                     className="w-[75%] outline-0 pl-2 text-[15px] text-septenary"
                     placeholder="Insira aqui a url da imagem"
                     name="photoLink"
+                    autoComplete="off"
                     onChange={(e) => props.onChangeFunction(e)}
                 />
             </div>
             <button
-                className="mt-3 text-primary underline cursor-pointer"
+                className="mt-3 text-primary underline cursor-pointer hover:text-red-800 duration-500 ease-in-out"
                 type="submit"
                 onClick={() => props.onClickFunction()}
             >Avançar</button>
