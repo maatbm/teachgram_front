@@ -83,9 +83,9 @@ export class UserService {
     }
   }
 
-  static async getFriends(): Promise<UserTypes.AllNonDeletedUsersResponse | ErrorResponse> {
+  static async getFriends(page: number, size: number): Promise<UserTypes.AllNonDeletedUsersResponse | ErrorResponse> {
     try {
-      const response = await API.get("/user/friends");
+      const response = await API.get("/user/friends", { params: { page, size } });
       return response.data as UserTypes.AllNonDeletedUsersResponse;
     } catch (error) {
       return ErrorHandler(error);
