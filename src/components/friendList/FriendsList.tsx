@@ -6,9 +6,10 @@ import { Loading } from "components/loading/Loading";
 
 interface FriendsListProps {
     closeModal: () => void;
+    showProfile: (userId: number) => void;
 }
 
-export function FriendsList({ closeModal }: FriendsListProps) {
+export function FriendsList({ closeModal, showProfile }: FriendsListProps) {
     const [friends, setFriends] = useState<UserTypes.UserResponse[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
@@ -91,7 +92,10 @@ export function FriendsList({ closeModal }: FriendsListProps) {
                                         <p className="text-sm text-septenary">{friend.name}</p>
                                     </div>
                                 </div>
-                                <button className="bg-primary text-white text-sm font-semibold py-1 cursor-pointer px-4 rounded-lg hover:bg-red-700 duration-300">
+                                <button
+                                    className="bg-primary text-white text-sm font-semibold py-1 cursor-pointer px-4 rounded-lg hover:bg-red-700 duration-300"
+                                    onClick={() => showProfile(friend.id)}
+                                >
                                     Ver perfil
                                 </button>
                             </li>

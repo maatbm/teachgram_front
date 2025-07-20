@@ -1,13 +1,14 @@
-import { HomeSideMenu, Loading, Feed, Profile, CreatePost, Modal, FriendsList } from "components"; // Adicione Modal e FriendsList
+import { HomeSideMenu, Loading, Feed, Profile, CreatePost, Modal, FriendsList, OtherProfile } from "components";
 import { useAuth } from "contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type component = 'feed' | 'profile' | 'config';
+type component = 'feed' | 'profile' | 'config' | 'otherProfile';
 
 export function HomePage() {
     const { user, loading } = useAuth();
     const [component, setComponent] = useState<component>('feed');
+    const [otherProfileId, setOtherProfileId] = useState<number | null>(null);
     const navigate = useNavigate();
     const [showCreatePostModal, setShowCreatePostModal] = useState(false);
     const [showFriendsModal, setShowFriendsModal] = useState(false);
@@ -16,8 +17,18 @@ export function HomePage() {
         switch (component) {
             case ('feed'): return (<Feed />);
             case ('profile'): return (<Profile />);
-            case ('config'): navigate("/config");
+            case ('config'): navigate("/config"); break;
+            case ('otherProfile'):
+                if (otherProfileId) {
+                    return <OtherProfile userId={otherProfileId} />
+                }
         }
+    }
+
+    function handleShowProfile(userId: number) {
+        setOtherProfileId(userId);
+        setComponent('otherProfile');
+        setShowFriendsModal(false);
     }
 
     return (
@@ -41,7 +52,7 @@ export function HomePage() {
                 </div>
                 <CreatePost showModal={showCreatePostModal} close={() => setShowCreatePostModal(false)} />
                 <Modal open={showFriendsModal}>
-                    <FriendsList closeModal={() => setShowFriendsModal(false)} />
+                    <FriendsList closeModal={() => setShowFriendsModal(false)} showProfile={handleShowProfile} />
                 </Modal>
             </main>
         </>

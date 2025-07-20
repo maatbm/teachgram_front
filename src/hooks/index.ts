@@ -4,3 +4,4 @@ export { useProfile } from './useProfile';
 export { useDelete } from './useDelete';
 export { useEditProfile } from './useEditprofile';
 export { useCreatePost } from './useCreatePost';
+export {useOtherProfile} from './useOtherProfile';
