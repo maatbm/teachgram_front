@@ -16,6 +16,8 @@ export interface UserResponse {
     description: string;
     phone: string;
     profileLink: string;
+    totalPosts: number;
+    totalFriends: number;
 }
 
 export interface SignInRequest {

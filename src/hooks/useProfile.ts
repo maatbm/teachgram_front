@@ -10,7 +10,6 @@ export function useProfile() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [totalPages, setTotalPages] = useState(1);
-    const [totalPosts, setTotalPosts] = useState(0);
 
     async function getUserPosts(userId: number) {
         const response = await PostService.getUserPosts(userId, page, 9);
@@ -18,7 +17,6 @@ export function useProfile() {
             const validPosts = response.posts.filter(post => post.photoLink || post.videoLink);
             setPosts(prevPosts => [...prevPosts, ...validPosts]);
             setTotalPages(response.totalPages);
-            setTotalPosts(response.totalItems);
             if (page < response.totalPages - 1) {
                 setPage(prevPage => prevPage + 1);
             }
@@ -41,5 +39,5 @@ export function useProfile() {
     }, [user]);
 
     const hasMore = page < totalPages - 1;
-    return { posts, getUserPosts, loading, error, hasMore, totalPosts }
+    return { posts, getUserPosts, loading, error, hasMore }
 }

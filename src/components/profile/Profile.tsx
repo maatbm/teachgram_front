@@ -4,7 +4,7 @@ import { Loading } from "../loading/Loading";
 import { useAuth } from "contexts/AuthContext";
 
 export function Profile() {
-    const { posts, loading, getUserPosts, hasMore, totalPosts } = useProfile();
+    const { posts, loading, getUserPosts, hasMore } = useProfile();
     const { user } = useAuth();
 
     return (
@@ -23,11 +23,11 @@ export function Profile() {
                 <div className="w-full flex justify-center">
                     <div className="w-[25%] flex">
                         <div className="w-1/2 flex flex-col items-center">
-                            <span className="font-bold text-[20px] text-quaternary">{totalPosts}</span>
+                            <span className="font-bold text-[20px] text-quaternary">{user?.totalPosts}</span>
                             <span className="text-[20px] text-terciary">Posts</span>
                         </div>
                         <div className="w-1/2 flex flex-col items-center border-l border-l-octonary">
-                            <span className="font-bold text-[20px] text-quaternary">100</span>
+                            <span className="font-bold text-[20px] text-quaternary">{user?.totalFriends}</span>
                             <span className="text-[20px] text-terciary">Amigos</span>
                         </div>
                     </div>
