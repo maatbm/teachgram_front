@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Modal } from "../modal/Modal";
 import { useDelete } from "hooks";
 import { Loading } from "components/loading/Loading";
+import { useAuth } from "contexts/AuthContext";
 
 interface ConfigInitialProps {
     setAccountConfig: () => void;
@@ -12,6 +13,7 @@ interface ConfigInitialProps {
 export function ConfigInitial(props: ConfigInitialProps) {
     const [showModal, setShowModal] = useState(false);
     const { loading, deleteUser } = useDelete();
+    const { signout } = useAuth();
 
     return (
         <>
@@ -32,6 +34,14 @@ export function ConfigInitial(props: ConfigInitialProps) {
                             onClick={() => setShowModal(true)}
                         >
                             Excluir conta
+                        </button>
+                    </div>
+                    <div className="w-full mt-[3%]">
+                        <button
+                            className="text-primary underline text-[25px] cursor-pointer hover:text-red-800 duration-400 ease-in-out"
+                            onClick={() => signout()}
+                        >
+                            Sair da conta
                         </button>
                     </div>
                 </div>
