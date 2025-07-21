@@ -36,9 +36,9 @@ export function SignupPage() {
     return (
         <>
             {loading && <Loading fixed={true} />}
-            <main className="w-full h-full flex items-center justify-center">
-                <div className="w-1/2 h-full flex flex-col">
-                    <div className="w-full flex flex-col items-center self-start">
+            <main className="w-full min-h-full md:h-full flex items-center justify-center p-5 lg:p-0">
+                <div className="w-full md:w-1/2 h-full flex flex-col">
+                    <div className="w-full flex flex-col items-center justify-center">
                         <div className="w-full p-3">
                             {step === 'profile' && <ReturnButton function={returnToDetails} />}
                         </div>
@@ -46,9 +46,9 @@ export function SignupPage() {
                             <TopImage />
                         </div>
                     </div>
-                    <div className="w-full h-full flex flex-col justify-center items-center">
+                    <div className="w-full h-full flex flex-grow flex-col justify-center items-center">
                         {step === 'profile' && <h2 className="text-quaternary font-semibold text-[20px]">Insira o link da sua foto de perfil</h2>}
-                        <div className="w-[45%] mt-2">
+                        <div className="w-full lg:w-[45%] mt-2">
                             <form className="w-full mt-1" onSubmit={handleFormSubmit}>
                                 {handleFormStep()}
                                 {error && <SigninError errorLabel={error} />}
@@ -65,7 +65,7 @@ export function SignupPage() {
                         </div>
                     </div>
                 </div>
-                <div className="w-1/2 h-full">
+                <div className="hidden lg:block w-1/2 h-full">
                     <SideImage />
                 </div>
             </main>
