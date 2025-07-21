@@ -16,7 +16,7 @@ export function ConfigInitial(props: ConfigInitialProps) {
     const [showModal, setShowModal] = useState(false);
     const { loading, deleteUser } = useDelete();
     const { signout } = useAuth();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <>
