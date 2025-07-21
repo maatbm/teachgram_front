@@ -1,4 +1,4 @@
-import { useState,} from "react";
+import { useCallback, useState, } from "react";
 import * as UserTypes from "services/userService/user.types";
 import { UserService } from "services/userService/user.service";
 
@@ -6,10 +6,11 @@ export function useEditProfile() {
     const [loading, setLoading] = useState(false);
     const [updatedUser, setUpdatedUser] = useState<UserTypes.UpdateUserProfileRequest>({});
     const [error, setError] = useState("");
-    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+
+    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setUpdatedUser((prev) => ({ ...prev, [name]: value }));
-    }
+    }, []);
 
     async function updateUser() {
         setLoading(true);
