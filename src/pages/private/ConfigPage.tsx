@@ -15,7 +15,7 @@ export function ConfigPage() {
     }
 
     return (
-        <main className="w-full h-full flex overflow-hidden">
+        <main className="w-full h-full flex md:overflow-hidden">
             <div className="w-full h-full">
                 {handleComponent()}
             </div>

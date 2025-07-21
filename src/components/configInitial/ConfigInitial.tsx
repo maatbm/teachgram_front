@@ -52,22 +52,22 @@ export function ConfigInitial(props: ConfigInitialProps) {
                     </div>
                 </div>
                 <Modal open={showModal}>
-                    <div className="w-1/2 bg-white rounded-3xl">
+                    <div className="w-[90%] md:w-1/2 bg-white rounded-3xl">
                         <div className="w-full p-7 border-b-2 border-b-nonary">
                             <h1 className="font-semibold text-quaternary text-[25px]">Excluir conta</h1>
                         </div>
                         <div className="w-full p-7">
-                            <span>Todos os seus dados serão excluídos.</span>
+                            <span className="text-[15px] text-quaternary">Todos os seus dados serão excluídos.</span>
                         </div>
                         <div className="w-full p-7 flex justify-center gap-7">
                             <button
-                                className="w-[30%] p-1 border border-primary rounded-md text-primary text-[15px] text-center cursor-pointer hover:bg-nonary duration-500 ease-in-out"
+                                className="w-1/2 md:w-[30%] p-1 border border-primary rounded-md text-primary text-[15px] text-center cursor-pointer hover:bg-nonary duration-500 ease-in-out"
                                 onClick={() => setShowModal(false)}
                             >
                                 Cancelar
                             </button>
                             <button
-                                className="w-[30%] border p-1 bg-primary border-primary text-[15px] rounded-md text-white text-center cursor-pointer hover:bg-red-800 duration-500 ease-in-out"
+                                className="w-1/2 md:w-[30%] border p-1 bg-primary border-primary text-[15px] rounded-md text-white text-center cursor-pointer hover:bg-red-800 duration-500 ease-in-out"
                                 onClick={() => { setShowModal(false); deleteUser(); }}
                             >
                                 Confirmar

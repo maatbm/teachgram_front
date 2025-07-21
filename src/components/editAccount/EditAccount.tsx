@@ -56,7 +56,7 @@ export function EditAccount(props: EditAccountProps) {
                     </div>
                     <div className="w-full flex gap-3">
                         <button
-                            className="w-[30%] mt-6 border p-1 border-primary text-[15px] text-primary rounded-md text-center cursor-pointer hover:bg-secondary duration-500 ease-in-out"
+                            className="w-1/2 md:w-[30%] mt-6 border p-1 border-primary text-[15px] text-primary rounded-md text-center cursor-pointer hover:bg-secondary duration-500 ease-in-out"
                             onClick={props.returnFunction}
                             type="button"
                             disabled={loading}
@@ -64,7 +64,7 @@ export function EditAccount(props: EditAccountProps) {
                             Cancelar
                         </button>
                         <button
-                            className="w-[30%] mt-6 border p-1 bg-primary border-primary text-[15px] rounded-md text-white text-center cursor-pointer hover:bg-red-800 duration-500 ease-in-out"
+                            className="w-1/2 md:w-[30%] mt-6 border p-1 bg-primary border-primary text-[15px] rounded-md text-white text-center cursor-pointer hover:bg-red-800 duration-500 ease-in-out"
                             onClick={() => { updateUser(); signout(); }}
                             type="submit"
                             disabled={loading}
