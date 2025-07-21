@@ -36,7 +36,7 @@ export function FriendsList({ closeModal, showProfile }: FriendsListProps) {
         if (totalPages <= 1) return null;
         const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
         return (
-            <div className="w-full flex justify-center items-center gap-2 mt-4">
+            <div className="w-fullf lex justify-center items-center gap-2 mt-4">
                 <button
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
@@ -70,7 +70,7 @@ export function FriendsList({ closeModal, showProfile }: FriendsListProps) {
     return (
         <>
             {loading && <Loading fixed={true} />}
-            <div className="w-[450px] bg-white p-5 rounded-2xl shadow-lg flex flex-col" style={{ minHeight: '500px' }}>
+            <div className="w-full h-full md:h-auto md:w-1/3 bg-white p-5 md:rounded-2xl shadow-lg flex flex-col">
                 <div className="w-full flex justify-between items-center border-b border-b-nonary pb-3 mb-4">
                     <h1 className="font-semibold text-[28px] text-quaternary">Amigos</h1>
                     <img
