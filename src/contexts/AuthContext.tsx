@@ -3,6 +3,7 @@ import { createContext, useEffect, useState, useContext, useMemo, useCallback } 
 import { UserService } from "services/userService/user.service";
 import { setAuthToken } from "services/API";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "components";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -116,7 +117,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider value={contextValue}>
-      {loading ? <p>Carregando...</p> : children}
+      {loading ? <Loading fixed={true}/>: children}
     </AuthContext.Provider>
   );
 };
