@@ -25,8 +25,18 @@ teachgram_front/
 │   ├── routes/                  # Routing configuration
 │   └── services/                # API services
 ├── vite.config.ts              # Vite configuration
+├── .env                        # Environment variables
 └── package.json                # Project dependencies and scripts
 ```
+
+## Environment Variables
+The application uses environment variables for configuration. Create a `.env` file in the root directory with the following variables:
+
+```
+VITE_API_BASE_URL="http://localhost:8080"  # Base URL for API requests
+```
+
+You can customize these variables based on your environment (development, staging, production).
 
 ## Usage Instructions
 ### Prerequisites
@@ -44,6 +54,8 @@ cd teachgram_front
 npm install
 # or
 yarn install
+
+# Create .env file (see Environment Variables section)
 
 # Start development server
 npm run dev
@@ -108,6 +120,11 @@ const profileUpdate = {
    - Enable debug mode by setting `localStorage.setItem('debug', 'true')`
    - Check network tab for slow requests
    - Monitor console for performance warnings
+
+4. API Connection Issues
+   - Error: "Cannot connect to API"
+   - Solution: Verify that the API server is running at the URL specified in your `.env` file
+   - Check that `VITE_API_BASE_URL` is correctly set
 
 ## Data Flow
 Teachgram implements a client-server architecture where the React frontend communicates with a REST API backend.
