@@ -21,16 +21,16 @@ export function ConfigInitial(props: ConfigInitialProps) {
             <div className="w-full h-full">
                 <div className="w-full mt-10 ml-[10%]">
                     <div className="w-full flex gap-7 items-center cursor-pointer " role="button" onClick={props.setAccountConfig}>
-                        <span className="font-semibold text-[25px]">Configurações da conta</span>
+                        <span className="font-semibold text-[20px] md:text-[25px]">Configurações da conta</span>
                         <img src={image} alt="Button" className="w-[11px] h-[18px] hover:scale-[1.2] duration-300 ease-in-out" />
                     </div>
                     <div className="w-full flex gap-7 items-center cursor-pointer mt-[3%]" role="button" onClick={props.setEditprofile}>
-                        <span className="font-semibold text-[25px]">Editar perfil</span>
+                        <span className="font-semibold text-[20px] md:text-[25px]">Editar perfil</span>
                         <img src={image} alt="Button" className="w-[11px] h-[18px] hover:scale-[1.2] duration-300 ease-in-out" />
                     </div>
                     <div className="w-full mt-[3%]">
                         <button
-                            className="text-primary underline text-[25px] cursor-pointer hover:text-red-800 duration-400 ease-in-out"
+                            className="text-primary underline text-[20px] md:text-[25px] cursor-pointer hover:text-red-800 duration-400 ease-in-out"
                             onClick={() => setShowModal(true)}
                         >
                             Excluir conta
@@ -38,7 +38,7 @@ export function ConfigInitial(props: ConfigInitialProps) {
                     </div>
                     <div className="w-full mt-[3%]">
                         <button
-                            className="text-primary underline text-[25px] cursor-pointer hover:text-red-800 duration-400 ease-in-out"
+                            className="text-primary underline text-[20px] md:text-[25px] cursor-pointer hover:text-red-800 duration-400 ease-in-out"
                             onClick={() => signout()}
                         >
                             Sair da conta

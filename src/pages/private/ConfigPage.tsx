@@ -17,14 +17,14 @@ export function ConfigPage() {
     }
 
     return (
-        <main className="w-full h-full grid grid-cols-[5%_1fr_18%] overflow-hidden">
+        <main className="w-full h-full flex flex-col md:grid md:grid-cols-[10%_1fr_18%] lg:grid-cols-[10%_1fr_18%] overflow-hidden">
             <div className="w-full p-4">
                 <ReturnButton function={() => { component === 'initial' ? navigate("/", { replace: true }) : setComponent('initial') }} />
             </div>
             <div className="w-full h-full">
                 {handleComponent()}
             </div>
-            <div className="w-full h-full">
+            <div className="hidden md:w-full h-full">
                 <SideRight />
             </div>
         </main>

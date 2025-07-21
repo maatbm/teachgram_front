@@ -10,7 +10,7 @@ export function ReturnButton(props: ReturnButtonProps) {
         <div className={`${props.w ? props.w: "w-full"}`}>
             <img
                 src={returnIcon}
-                className="w-[25px] h-[25px] cursor-pointer hover:scale-[1.1] duration-300 ease-in-out"
+                className="w-[12px] h-[12px] md:w-[25px] md:h-[25px] cursor-pointer hover:scale-[1.1] duration-300 ease-in-out"
                 role="button"
                 onClick={props.function}
             />
