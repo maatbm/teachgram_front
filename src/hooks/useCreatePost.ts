@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PostService } from "services/postService/post.service";
 import { type CreatePostRequest } from "services/postService/post.types";
@@ -17,15 +17,15 @@ export function useCreatePost() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+    const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setPost((prev) => ({ ...prev, [name]: value }));
-    }
+    }, []);
 
-    function handlePrivacity(e: React.ChangeEvent<HTMLInputElement>) {
+    const handlePrivacity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
         setPost((prev) => ({ ...prev, [name]: checked }));
-    }
+    }, []);
 
     async function createPost() {
         setLoading(true)
