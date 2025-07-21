@@ -33,12 +33,12 @@ export function SigninPage() {
     return (
         <>
             {loading && <Loading fixed={true} />}
-            <main className="w-full h-full flex items-center justify-center p-4 lg:p-0">
+            <main className="w-full min-h-full md:h-full flex items-center justify-center p-4 lg:p-0">
                 <div className="w-full sm:w-1/2 h-full flex flex-col items-center justify-center">
                     <div className="w-[70%] lg:w-[55%]">
                         <TopImage />
                     </div>
-                    <div className="w-full lg:w-[45%] mt-10 lg:mt-20">
+                    <div className="w-full lg:w-[45%] mt-5 lg:mt-20">
                         <h2 className="text-quaternary font-semibold mb-5">Faça seu login</h2>
                         <form className="w-full" onSubmit={handleSubmit}>
                             <AuthInput
