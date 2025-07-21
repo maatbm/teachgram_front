@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import * as PostTypes from "services/postService/post.types";
 import { PostService } from "services/postService/post.service";
 
@@ -7,18 +7,16 @@ export function useFeed() {
     const [page, setPage] = useState<number>(0);
     const [totalPages, setTotalPages] = useState(0);
 
-    async function getPosts() {
+    const getPosts = useCallback(async () => {
         const response = await PostService.getFeedposts(page, 5);
         if ("posts" in response) {
             setPosts(prevPosts => [...prevPosts, ...response.posts]);
             setTotalPages(response.totalPages);
-            if (page < response.totalPages) {
-                setPage(prevPage => prevPage + 1);
-            }
+            setPage(prevPage => prevPage + 1);
         }
-    }
+    }, [page, totalPages]);
 
-    async function likePost(postId: number) {
+    const likePost = useCallback(async (postId: number) => {
         const response = await PostService.likePost(postId);
         if (typeof response === "number") {
             setPosts(prevPosts =>
@@ -27,11 +25,12 @@ export function useFeed() {
                 )
             );
         }
-    }
+    }, []);
 
     useEffect(() => {
         getPosts();
     }, []);
+
     const hasMore = page < totalPages;
-    return { getPosts, posts, likePost, hasMore };
+    return { getPosts, posts, likePost, hasMore};
 }
