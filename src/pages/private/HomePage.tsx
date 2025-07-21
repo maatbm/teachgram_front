@@ -47,7 +47,7 @@ export function HomePage() {
                         component={component}
                     />
                 </div>
-                <div className="w-full md:w-[80%] h-full flex flex-col items-center p-4 md:p-0">
+                <div className="w-full md:w-[80%] h-full flex flex-col items-center p-2 md:p-0">
                     {handleComponent()}
                 </div>
                 <CreatePost showModal={showCreatePostModal} close={() => setShowCreatePostModal(false)} />
