@@ -1,53 +1,117 @@
+import { createContext, useEffect, useContext, useMemo, useCallback, useReducer } from "react";
 import * as UserTypes from "services/userService/user.types";
-import { createContext, useEffect, useState, useContext, useMemo, useCallback } from "react";
 import { UserService } from "services/userService/user.service";
 import { setAuthToken } from "services/API";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "components";
 
-interface AuthContextType {
+interface AuthState {
   isAuthenticated: boolean;
-  signin: (credentials: UserTypes.SignInRequest, rememberMe: boolean) => Promise<void>;
-  signout: () => void;
+  user: UserTypes.UserResponse | null;
   error: string | null;
   loading: boolean;
-  user: UserTypes.UserResponse | null;
+}
+
+interface AuthContextType extends AuthState {
+  signin: (credentials: UserTypes.SignInRequest, rememberMe: boolean) => Promise<void>;
+  signout: () => void;
 }
 
 const localStorageTokenName = "teachgram_jwt";
 
+const initialState: AuthState = {
+  isAuthenticated: false,
+  user: null,
+  error: null,
+  loading: true,
+};
+
+type Action =
+  | { type: 'LOGIN_START' }
+  | { type: 'LOGIN_SUCCESS'; payload: UserTypes.UserResponse }
+  | { type: 'LOGIN_FAILURE'; payload: string }
+  | { type: 'LOGOUT' }
+  | { type: 'INITIAL_AUTH_FINISHED' };
+
+const authReducer = (state: AuthState, action: Action): AuthState => {
+  switch (action.type) {
+    case 'LOGIN_START':
+      return { ...state, loading: true, error: null };
+    case 'LOGIN_SUCCESS':
+      return { ...state, loading: false, isAuthenticated: true, user: action.payload, error: null };
+    case 'LOGIN_FAILURE':
+      return { ...state, loading: false, isAuthenticated: false, user: null, error: action.payload };
+    case 'LOGOUT':
+      return { ...initialState, loading: false };
+    case 'INITIAL_AUTH_FINISHED':
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<UserTypes.UserResponse | null>(null);
+  const [state, dispatch] = useReducer(authReducer, initialState);
   const navigate = useNavigate();
-
-  const getUser = useCallback(async () => {
-    try {
-      const response = await UserService.getAuthenticatedUserProfile();
-      if ("id" in response) {
-        setIsAuthenticated(true);
-        setUser(response);
-      } else {
-        setIsAuthenticated(false);
-        setUser(null);
-        setError(response.message);
-      }
-    } catch (err) {
-      setIsAuthenticated(false);
-      setUser(null);
-    }
-  }, []); 
 
   const signout = useCallback(() => {
     setAuthToken(null);
-    setIsAuthenticated(false);
-    setUser(null);
     localStorage.removeItem(localStorageTokenName);
+    dispatch({ type: 'LOGOUT' });
   }, []);
+
+  const signin = useCallback(async (credentials: UserTypes.SignInRequest, rememberMe: boolean) => {
+    dispatch({ type: 'LOGIN_START' });
+    try {
+      const tokenResponse = await UserService.signin(credentials);
+      if ("token" in tokenResponse) {
+        const fullToken = tokenResponse.type + tokenResponse.token;
+        setAuthToken(fullToken);
+        if (rememberMe) {
+          localStorage.setItem(localStorageTokenName, JSON.stringify(tokenResponse));
+        }
+        const userProfile = await UserService.getAuthenticatedUserProfile();
+        if ("id" in userProfile) {
+          dispatch({ type: 'LOGIN_SUCCESS', payload: userProfile });
+        } else {
+          throw new Error(userProfile.message || "Failed to fetch user profile after sign in.");
+        }
+      } else {
+        throw new Error(tokenResponse.message || "An error occurred during sign-in.");
+      }
+    } catch (err: any) {
+      dispatch({ type: 'LOGIN_FAILURE', payload: err.message || "An unknown error occurred." });
+    }
+  }, []);
+
+  useEffect(() => {
+    const initializeAuth = async () => {
+      const tokenString = localStorage.getItem(localStorageTokenName);
+      if (!tokenString) {
+        dispatch({ type: 'INITIAL_AUTH_FINISHED' });
+        return;
+      }
+      try {
+        const parsedToken: UserTypes.JwtTokenResponse = JSON.parse(tokenString);
+        const isTokenValid = parsedToken?.token && parsedToken.expiration > Date.now();
+        if (isTokenValid) {
+          setAuthToken(parsedToken.type + parsedToken.token);
+          const userProfile = await UserService.getAuthenticatedUserProfile();
+          if ("id" in userProfile) {
+            dispatch({ type: 'LOGIN_SUCCESS', payload: userProfile });
+            return;
+          }
+        }
+      } catch (error) {
+        console.error("Failed to initialize auth from token:", error);
+      }
+      signout();
+    };
+
+    initializeAuth();
+  }, [signout]);
 
   useEffect(() => {
     const handleUnauthorized = () => {
@@ -60,72 +124,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [navigate, signout]);
 
-  useEffect(() => {
-    const initializeAuth = async () => {
-      const tokenString = localStorage.getItem(localStorageTokenName);
-      if (tokenString) {
-        try {
-          const parsedToken: UserTypes.JwtTokenResponse = JSON.parse(tokenString);
-          if (parsedToken?.token && parsedToken.expiration > Date.now()) {
-            setAuthToken(parsedToken.type + parsedToken.token);
-            await getUser();
-          } else {
-            localStorage.removeItem(localStorageTokenName);
-          }
-        } catch (error) {
-          console.error("Error on pre-loading token:", error);
-          localStorage.removeItem(localStorageTokenName);
-        }
-      }
-      setLoading(false);
-    };
-    initializeAuth();
-  }, [getUser]);
-
-  const signin = useCallback(async (credentials: UserTypes.SignInRequest, rememberMe: boolean) => {
-    setError(null);
-    setLoading(true);
-    try {
-      const response = await UserService.signin(credentials);
-      if ("token" in response) {
-        setAuthToken(response.type + response.token);
-        await getUser();
-        if (rememberMe) {
-          localStorage.setItem(localStorageTokenName, JSON.stringify(response));
-        }
-      } else {
-        setError(response.message || "An error occurred during sign-in.");
-      }
-    } catch (error) {
-      console.error("Sign-in error:", error);
-      setError("An error occurred during sign-in. Please try again.");
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-  }, [getUser]);
-
   const contextValue = useMemo(() => ({
-    isAuthenticated,
+    ...state,
     signin,
     signout,
-    error,
-    loading,
-    user
-  }), [isAuthenticated, signin, signout, error, loading, user]);
+  }), [state, signin, signout]);
 
   return (
     <AuthContext.Provider value={contextValue}>
-      {loading ? <Loading fixed={true}/>: children}
+      {state.loading ? <Loading fixed={true} /> : children}
     </AuthContext.Provider>
   );
 };
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-}
+};
