@@ -103,8 +103,8 @@ export function PostComponent(props: PostComponentProps) {
                         error={error}
                     />
                     :
-                    <div className="w-1/3 bg-white p-5 rounded-2xl">
-                        <h1 className="text-center font-semibold text-[25px] text-quaternary">Excluir publicação?</h1>
+                    <div className="w-[90%] md:w-1/3 bg-white p-5 rounded-2xl">
+                        <h1 className="text-center font-semibold text-[20px] md:text-[25px] text-quaternary">Excluir publicação?</h1>
                         <div className="w-full flex justify-around mt-4">
                             <button
                                 className="border border-primary text-primary w-1/3 rounded-md text-[15px] cursor-pointer hover:bg-secondary duration-500 ease-in-out"

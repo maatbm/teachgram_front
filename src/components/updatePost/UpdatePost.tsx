@@ -13,13 +13,13 @@ interface UpdatePostProps {
 
 export function Updatepost(props: UpdatePostProps) {
     return (
-        <div className="w-1/3 bg-white rounded-3xl p-7 flex flex-col items-center">
+        <div className="w-full md:w-1/3 h-full md:h-auto bg-white md:rounded-3xl p-7 flex flex-col items-center">
             <div className="w-full">
                 <img src={closeIcon} alt="Close button" role="button" onClick={() => props.closeFunction()} className="cursor-pointer hover:scale-[1.1] duration-300 ease-in-out" />
             </div>
             <form className="w-full flex flex-col items-center">
                 <div className="w-2/3 flex justify-between">
-                    <h1 className="text-[25px] font-semibold text-quaternary">Editar publicação</h1>
+                    <h1 className="text-[15px] md:text-[25px] font-semibold text-quaternary">Editar publicação</h1>
                     <button
                         className="text-primary text-[15px] font-semibold cursor-pointer underline hover:text-red-800 duration-500 ease-in-out"
                         onClick={() => props.updatePostFunction()}
@@ -27,7 +27,7 @@ export function Updatepost(props: UpdatePostProps) {
                         Salvar
                     </button>
                 </div>
-                <div className="w-1/2 mt-4">
+                <div className="w-full md:w-1/2 mt-4">
                     <img src={props.post.photoLink} />
                 </div>
                 <input
