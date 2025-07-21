@@ -4,6 +4,8 @@ import { Modal } from "../modal/Modal";
 import { useDelete } from "hooks";
 import { Loading } from "components/loading/Loading";
 import { useAuth } from "contexts/AuthContext";
+import { ReturnButton } from "components/button/ReturnButton";
+import { useNavigate } from "react-router-dom";
 
 interface ConfigInitialProps {
     setAccountConfig: () => void;
@@ -14,11 +16,15 @@ export function ConfigInitial(props: ConfigInitialProps) {
     const [showModal, setShowModal] = useState(false);
     const { loading, deleteUser } = useDelete();
     const { signout } = useAuth();
+    const navigate = useNavigate()
 
     return (
         <>
             {loading && <Loading fixed={true} />}
             <div className="w-full h-full">
+                <div className="w-full p-4">
+                    <ReturnButton function={() => navigate("/", { replace: true })} />
+                </div>
                 <div className="w-full mt-10 ml-[10%]">
                     <div className="w-full flex gap-7 items-center cursor-pointer " role="button" onClick={props.setAccountConfig}>
                         <span className="font-semibold text-[20px] md:text-[25px]">Configurações da conta</span>
