@@ -10,8 +10,8 @@ interface FeedProps {
 export function Feed({ showProfile }: FeedProps) {
     const { posts, likePost, getPosts, hasMore } = useFeed();
     return (
-        <div className="w-full h-full flex">
-            <div id="scrollableDiv" className="w-[82%] h-full overflow-y-auto">
+        <div className="w-full h-full flex mt-[15%] md:mt-0 ">
+            <div id="scrollableDiv" className="w-full md:w-[82%] h-full overflow-y-auto">
                 <InfiniteScroll className="w-full flex flex-col items-center py-9 gap-9"
                     dataLength={posts.length}
                     next={getPosts}
@@ -27,7 +27,7 @@ export function Feed({ showProfile }: FeedProps) {
                     })}
                 </InfiniteScroll>
             </div>
-            <div className="w-[18%] h-full">
+            <div className="hidden md:block w-[18%] h-full">
                 <SideRight />
             </div>
         </div>

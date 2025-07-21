@@ -45,14 +45,14 @@ export function PostComponent(props: PostComponentProps) {
     return (
         <>
             {loading && <Loading fixed={true} />}
-            <div className="w-[75%] shadow-lg p-4 rounded-2xl border border-septenary" key={props.post.id}>
+            <div className="w-full md:w-[75%] shadow-lg p-4 rounded-2xl border border-septenary" key={props.post.id}>
                 <div className="w-full flex relative">
                     <div className="w-[74px] cursor-pointer" onClick={() => props.showProfile(props.post.user.id)}>
                         <img src={props.post.user.profileLink} alt="Profile image" className="rounded-circle" />
                     </div>
                     <div className="w-full ml-3 flex flex-col justify-center">
-                        <span className="text-[25px] text-septenary cursor-pointer" onClick={() => props.showProfile(props.post.user.id)}>{props.post.user.username}</span>
-                        <span className="text-[20px] text-septenary">{formatDistanceToNow(new Date(props.post.createdAt), { addSuffix: true, locale: ptBR })}</span>
+                        <span className="text-[12px] md:text-[25px] text-septenary cursor-pointer" onClick={() => props.showProfile(props.post.user.id)}>{props.post.user.username}</span>
+                        <span className="text-[10px] md:text-[20px] text-septenary">{formatDistanceToNow(new Date(props.post.createdAt), { addSuffix: true, locale: ptBR })}</span>
                     </div>
                     {props.post.user.id === user?.id ? <div className="w-[5%] cursor-pointer hover:scale-[1.1] duration-500 ease-in-out">
                         <img src={image} alt="menu" role="button" onClick={() => toggleToolbox()} />
@@ -75,7 +75,7 @@ export function PostComponent(props: PostComponentProps) {
                     )}
                 </div>
                 <div className="w-full mt-3">
-                    <span className="text-[20px] text-septenary">{props.post.description}</span>
+                    <span className="text-[12px] md:text-[20px] text-septenary">{props.post.description}</span>
                 </div>
                 {props.post.photoLink &&
                     <div className="w-full flex justify-center mt-3">
@@ -87,9 +87,9 @@ export function PostComponent(props: PostComponentProps) {
                         <video src={props.post.videoLink} className="rounded-2xl w-full" controls />
                     </div>
                 }
-                <div className="w-full flex gap-5 mt-3">
+                <div className="w-full flex gap-5 mt-3 items-center">
                     <LikeBUtton buttonFunction={() => props.likeFunction(props.post.id)} />
-                    <span className="text-[20px] text-septenary">{props.post.likes} curtidas</span>
+                    <span className="text-[10px] md:text-[20px] text-septenary">{props.post.likes} curtidas</span>
                 </div>
             </div>
             <Modal open={showModal}>

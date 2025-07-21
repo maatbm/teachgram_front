@@ -24,44 +24,44 @@ export function HomeSideMenu(props: HomeSideMenuProps) {
                 <TopImage />
             </div>
             <div
-                className="w-full p-3 flex items-center gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
+                className="w-full p-3 flex items-center justify-center lg:justify-start gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
                 role="button"
                 onClick={props.feedFunction}
             >
                 <img src={homeImage} alt="Home image" className="w-[29px] h-[29px]" />
-                <span className="hidden md:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Feed</span>
+                <span className="hidden lg:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Feed</span>
             </div>
             <div
-                className="w-full p-3 flex items-center gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
+                className="w-full p-3 flex items-center justify-center lg:justify-start gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
                 role="button"
                 onClick={props.friendsFunction}
             >
                 <img src={friendsImage} alt="Home image" className="w-[29px] h-[18px]" />
-                <span className="hidden md:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Amigos</span>
+                <span className="hidden lg:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Amigos</span>
             </div>
             <div
-                className="w-full p-2 flex items-center gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
+                className="w-full p-2 flex items-center justify-center lg:justify-start gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
                 role="button"
                 onClick={props.profileFunction}
             >
                 <img src={props.profilePicture || defaultUser} alt="Home image" className="w-[40px] h-[40px] rounded-circle" />
-                <span className="hidden md:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Perfil</span>
+                <span className="hidden lg:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Perfil</span>
             </div>
             <div
-                className="w-full p-3 flex items-center gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
+                className="w-full p-3 flex items-center justify-center lg:justify-start gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
                 role="button"
                 onClick={props.configFunction}
             >
                 <img src={configImage} alt="Home image" className="w-[29px] h-[29px]" />
-                <span className="hidden md:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Configurações</span>
+                <span className="hidden lg:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Configurações</span>
             </div>
             <div
-                className="w-full p-3 flex items-center gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
+                className="w-full p-3 flex items-center justify-center lg:justify-start gap-3 border border-senary mt-3 rounded-[15px] hover-background-gray cursor-pointer click-decrease-size shadow-md"
                 role="button"
                 onClick={props.createPostFunction}
             >
                 <img src={createImage} alt="Home image" className="w-[29px] h-[29px]" />
-                <span className="hidden md:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Criar</span>
+                <span className="hidden lg:inline text-[20px] text-septenary whitespace-nowrap overflow-hidden text-ellipsis">Criar</span>
             </div>
         </div>
     );
