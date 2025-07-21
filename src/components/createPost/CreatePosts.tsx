@@ -35,9 +35,9 @@ export function CreatePost(props: CreatePostProps) {
     return (
         <Modal open={props.showModal}>
             {loading && <Loading fixed={true} />}
-            <div className="w-1/2 bg-white p-5 rounded-2xl">
+            <div className="w-full h-full md:h-auto md:w-1/2 bg-white p-5 md:rounded-2xl">
                 <div className="w-full flex justify-between items-center">
-                    <h1 className="font-semibold text-[25px] text-quaternary">Criar nova publicação</h1>
+                    <h1 className="font-semibold text-[20px] md:text-[25px] text-quaternary">Criar nova publicação</h1>
                     <img src={close} alt="Close modal" className="w-[17px] h-[17px] hover:scale-[1.2] duration-400 ease-in-out cursor-pointer" role="button" onClick={() => props.close()} />
                 </div>
                 <div>

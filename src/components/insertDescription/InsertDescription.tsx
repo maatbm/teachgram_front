@@ -10,7 +10,7 @@ interface InsertDescriptionProps {
 export function InsertDescription(props: InsertDescriptionProps) {
     return (
         <div className="w-full flex flex-col items-center">
-            <img src={props.srcImage ? props.srcImage : imageIcon} alt="Preview image" className="w-[30%]" />
+            <img src={props.srcImage ? props.srcImage : imageIcon} alt="Preview image" className=" my-4 w-[50%] md:w-[40%]" />
             <form className="w-full mt-4 flex flex-col items-center">
                 <input
                     className="w-full text-[15px] text-ellipsis text-septenary outline-0 focus:border-b border-b-primary"
