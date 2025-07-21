@@ -4,7 +4,7 @@ import { Loading } from "../loading/Loading";
 import { useAuth } from "contexts/AuthContext";
 
 export function Profile() {
-    const { posts, loading, getUserPosts, hasMore } = useProfile();
+    const { posts, loading, loadMorePosts, hasMore } = useProfile();
     const { user } = useAuth();
 
     return (
@@ -36,7 +36,7 @@ export function Profile() {
                     <InfiniteScroll
                         className="w-full grid grid-cols-3 gap-1 md:gap-2"
                         dataLength={posts.length}
-                        next={() => user && getUserPosts(user.id)}
+                        next={() => user && loadMorePosts()}
                         hasMore={hasMore}
                         loader={<h1 className="text-center text-primary text-[15px] md:text-[25px] mt-3">Carregando...</h1>}
                         endMessage={<h1 className="text-center text-primary text-15px md:text-[25px] mt-3">Você chegou no final!</h1>}
