@@ -30,26 +30,31 @@ export function useSignup() {
     const validateDetailsStep = useCallback(() => {
         const { name, mail, username, password } = user;
         if (!name || !mail || !username || !password) {
-            setError("Campos não preenchidos");
-            return false;
+            return "Todos os campos de detalhes são obrigatórios.";
         }
-        return true;
+        return null; 
     }, [user]);
 
     const handleFormSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError("");
+        setError(""); 
+
         if (step === 'details') {
-            if (validateDetailsStep()) {
-                setStep('profile');
-            }
-            return;
-        }
-        if (step === 'profile') {
-            if (!user.profileLink) {
-                setError("Link obrigatório");
+            const errorMessage = validateDetailsStep();
+            if (errorMessage) {
+                setError(errorMessage);
                 return;
             }
+            setStep('profile');
+            return;
+        }
+
+        if (step === 'profile') {
+            if (!user.profileLink) {
+                setError("O link da foto de perfil é obrigatório.");
+                return;
+            }
+            
             setLoading(true);
             try {
                 const response = await UserService.signup(user);
@@ -60,9 +65,9 @@ export function useSignup() {
                 }
             } catch (err) {
                 console.error("Signup error:", err);
-                setError("Ocorreu um erro inesperado.");
+                setError("Ocorreu um erro inesperado durante o cadastro.");
             } finally {
-                setTimeout(() => { setLoading(false) }, 1000);
+                setLoading(false);
             }
         }
     }, [user, step, navigate, validateDetailsStep]);
