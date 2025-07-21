@@ -8,7 +8,7 @@ interface OtherProfileProps {
 }
 
 export function OtherProfile(props: OtherProfileProps) {
-    const { posts, loading, hasMore, user, getPosts, addFriend } = useOtherProfile(props.userId);
+    const { posts, loading, hasMore, user, loadMorePosts, addFriend } = useOtherProfile(props.userId);
 
     const handleAddFriend = async () => {
         await addFriend();
@@ -27,12 +27,12 @@ export function OtherProfile(props: OtherProfileProps) {
                         <span className="text-[20px] text-terciary">{user?.description}</span>
                         <div className="mt-2 hidden md:block">
                             {user?.isFriend ? (
-                                <div className="w-1/6 border border-terciary flex items-center p-2 rounded-xl justify-between">
+                                <div className="w-full border border-terciary flex items-center p-2 rounded-xl justify-between">
                                     <span className="text-[15px] text-terciary">Amigos</span>
                                     <img src={icon} className="w-[15px]" />
                                 </div>
                             ) : (
-                                <div className="w-1/6">
+                                <div className="w-full">
                                     <button
                                         className="w-full mt-3 bg-primary rounded-xl p-2 font-semibold text-center text-white text-[15px] shadow cursor-pointer hover:bg-red-800 duration-500 ease-in-out click-decrease-size"
                                         onClick={handleAddFriend}
@@ -79,7 +79,7 @@ export function OtherProfile(props: OtherProfileProps) {
                     <InfiniteScroll
                         className="w-full grid grid-cols-3 gap-2"
                         dataLength={posts.length}
-                        next={() => getPosts()}
+                        next={() => loadMorePosts()}
                         hasMore={hasMore}
                         loader={<h1 className="text-center text-primary text-[25px] mt-3">Carregando...</h1>}
                         endMessage={<h1 className="text-center text-primary text-[25px] mt-3">Você chegou no final!</h1>}

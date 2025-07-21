@@ -5,30 +5,22 @@ import { UserService } from "services/userService/user.service";
 import type { UserResponse } from "services/userService/user.types";
 
 export function useOtherProfile(userId: number) {
-    const [user, setUser] = useState<UserResponse>();
+    const [user, setUser] = useState<UserResponse | null>(null);
     const [posts, setPosts] = useState<PostResponse[]>([]);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
-    const [hasMore, setHasMore] = useState(true);
 
     const addFriend = useCallback(async () => {
-        setLoading(true);
         const response = await UserService.addFriend(userId);
         if (response) {
             console.error(response.message);
         } else {
-            setUser(prevUser => prevUser ? { ...prevUser, isFriend: true, totalFriends: prevUser.totalFriends + 1 } : undefined);
+            setUser(prevUser => prevUser ? { ...prevUser, isFriend: true, totalFriends: prevUser.totalFriends + 1 } : null);
         }
-        setLoading(false);
     }, [userId]);
 
-    const getPosts = useCallback(async () => {
-        if (page >= totalPages) {
-            setHasMore(false);
-            return;
-        }
-
+    const loadMorePosts = useCallback(async () => {
         const response = await PostService.getUserPosts(userId, page, 9);
         if ("posts" in response) {
             const validPosts = response.posts.filter(post => post.photoLink || post.videoLink);
@@ -41,33 +33,37 @@ export function useOtherProfile(userId: number) {
     useEffect(() => {
         const fetchInitialData = async () => {
             setLoading(true);
+            setUser(null);
             setPosts([]);
             setPage(0);
-            setHasMore(true);
 
-            const userResponse = await UserService.getUserProfileById(userId);
-            if ("id" in userResponse) {
-                setUser(userResponse);
-            }
+            try {
+                const [userResponse, postResponse] = await Promise.all([
+                    UserService.getUserProfileById(userId),
+                    PostService.getUserPosts(userId, 0, 9)
+                ]);
 
-            const postResponse = await PostService.getUserPosts(userId, 0, 9);
-            if ("posts" in postResponse) {
-                const validPosts = postResponse.posts.filter(post => post.photoLink || post.videoLink);
-                setPosts(validPosts); 
-                setPage(1);
-                setTotalPages(postResponse.totalPages);
-                if (1 >= postResponse.totalPages) {
-                    setHasMore(false);
+                if ("id" in userResponse) {
+                    setUser(userResponse);
                 }
-            } else {
-                setHasMore(false);
-            }
 
-            setLoading(false);
+                if ("posts" in postResponse) {
+                    const validPosts = postResponse.posts.filter(post => post.photoLink || post.videoLink);
+                    setPosts(validPosts);
+                    setPage(1);
+                    setTotalPages(postResponse.totalPages);
+                }
+            } catch (error) {
+                console.error("Failed to fetch user profile data:", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchInitialData();
     }, [userId]);
 
-    return { user, posts, loading, getPosts, hasMore, addFriend }
+    const hasMore = page < totalPages;
+
+    return { user, posts, loading, hasMore, addFriend, loadMorePosts };
 }
