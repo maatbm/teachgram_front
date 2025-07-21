@@ -10,25 +10,7 @@ export function useOtherProfile(userId: number) {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
-
-    const getUser = useCallback(async () => {
-        const response = await UserService.getUserProfileById(userId);
-        if ("id" in response) {
-            setUser(response);
-        }
-    }, [userId]);
-
-    const getPosts = useCallback(async () => {
-        const response = await PostService.getUserPosts(userId, page, 9);
-        if ("posts" in response) {
-            const validPosts = response.posts.filter(post => post.photoLink || post.videoLink);
-            setPosts(prevPosts => [...prevPosts, ...validPosts]);
-            setTotalPages(response.totalPages);
-            if (page < response.totalPages - 1) {
-                setPage(prevPage => prevPage + 1);
-            }
-        }
-    }, [userId, page]);
+    const [hasMore, setHasMore] = useState(true);
 
     const addFriend = useCallback(async () => {
         setLoading(true);
@@ -41,21 +23,51 @@ export function useOtherProfile(userId: number) {
         setLoading(false);
     }, [userId]);
 
-    useEffect(() => {
-        setLoading(true);
-        setPosts([]);
-        setPage(0);
-        setTotalPages(1);
-
-        async function fetchData() {
-            await getUser();
-            await getPosts();
-            setLoading(false);
+    const getPosts = useCallback(async () => {
+        if (page >= totalPages) {
+            setHasMore(false);
+            return;
         }
-        fetchData();
-    }, [userId, getUser, getPosts]);
 
-    const hasMore = page < totalPages;
+        const response = await PostService.getUserPosts(userId, page, 9);
+        if ("posts" in response) {
+            const validPosts = response.posts.filter(post => post.photoLink || post.videoLink);
+            setPosts(prevPosts => [...prevPosts, ...validPosts]);
+            setPage(prevPage => prevPage + 1);
+            setTotalPages(response.totalPages);
+        }
+    }, [userId, page, totalPages]);
+
+    useEffect(() => {
+        const fetchInitialData = async () => {
+            setLoading(true);
+            setPosts([]);
+            setPage(0);
+            setHasMore(true);
+
+            const userResponse = await UserService.getUserProfileById(userId);
+            if ("id" in userResponse) {
+                setUser(userResponse);
+            }
+
+            const postResponse = await PostService.getUserPosts(userId, 0, 9);
+            if ("posts" in postResponse) {
+                const validPosts = postResponse.posts.filter(post => post.photoLink || post.videoLink);
+                setPosts(validPosts); 
+                setPage(1);
+                setTotalPages(postResponse.totalPages);
+                if (1 >= postResponse.totalPages) {
+                    setHasMore(false);
+                }
+            } else {
+                setHasMore(false);
+            }
+
+            setLoading(false);
+        };
+
+        fetchInitialData();
+    }, [userId]);
 
     return { user, posts, loading, getPosts, hasMore, addFriend }
 }
